@@ -5,7 +5,9 @@ import plotly.express as px
 
 iris = px.data.iris()
 #print(iris.head())
-selected_columns = ['sepal_width', 'sepal_length']
+#print(iris.columns)
+
+selected_columns = ['sepal_width', 'sepal_length','petal_length', 'petal_width']
 numeric_iris = iris[selected_columns]
 
 corr_matrix = numeric_iris.corr()
@@ -15,6 +17,6 @@ fig = px.imshow(
      corr_matrix, 
      text_auto=True,  
      title='Correlation Heatmap of Iris Dataset',
-     labels=dict(x='sepal_length', y='sepal_width') 
- )
+     labels=dict(x='length', y='width') 
+)
 fig.show()
