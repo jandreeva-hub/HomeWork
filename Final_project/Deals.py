@@ -1,6 +1,6 @@
 import pandas as pd
 
-Deals1 = pd.read_excel("Deals.xlsx")
+Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
 Deals1 = Deals1.drop_duplicates()
 #print(Deals.isnull().sum())
 Deals1 = Deals1.dropna(how='all')
@@ -8,11 +8,19 @@ Deals1 = Deals1.dropna(how='all')
 #print(Deals.isnull().sum())
 #Deals1.to_excel('Deals1.xlsx', index=False)
 
-
+Deals1 = pd.DataFrame(Deals1)
+# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].astype(str)
+# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(['nan', 'None', ' ', 'NaN'], 'unknown')
+# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].str.strip()
+# import re
+# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=r'^\s*$', value='unknown', regex=True)
+# # Замена всех значений 'None' (которые были пропущенными) на 'unknown'
+# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(nan, 'unknown')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace('None', 'unknown')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].fillna('unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='-', value=0)
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=90, value=0)
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='.', value=0)
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='-', value='0')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=90, value='0')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='.', value='0')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='?', value='unknown')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='25 лет живет в Германии', value='B2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='31.05.2024', value='B2')
@@ -194,5 +202,21 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='А2-
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].str.upper()
 
 
-print(Deals1.isnull().sum())
 
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].fillna('unknown')
+
+# Если 'None' также представлен в столбце как строка, заменяем его на 'unknown'
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace('None', 'unknown')
+
+# Получение уникальных значений после замены
+#unique_values = Deals1['Level of Deutsch'].unique()
+print(Deals1.shape[0])
+
+
+
+
+#print(unique_values)
+#print(Deals1['Level of Deutsch'].dtype)
+#print(Deals1.isnull().sum())
+# print(Deals1['Level of Deutsch'].unique())
+# print(Deals1.isnull().sum())

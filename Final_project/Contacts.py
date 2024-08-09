@@ -36,6 +36,9 @@ C_C[date_cols] = C_C[date_cols].astype("datetime64[ns]")
 
 # print(C_C.dtypes)
 # print(C_C.head())
-C_C.to_excel('C_C.xlsx', index=False)
+#C_C.to_excel('C_C.xlsx', index=False)
 
-
+Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
+print(C_C['CONTACTID']. isin (Deals1['Contact Name']). value_counts ())
+print(Deals1.shape[0])
+print(C_C.shape[0])
