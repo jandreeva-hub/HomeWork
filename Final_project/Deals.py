@@ -1,27 +1,20 @@
+import numpy as np
 import pandas as pd
-
+import re
 Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
 Deals1 = Deals1.drop_duplicates()
 #print(Deals.isnull().sum())
 Deals1 = Deals1.dropna(how='all')
 #print(Deals.info)
-#print(Deals.isnull().sum())
 #Deals1.to_excel('Deals1.xlsx', index=False)
-
 Deals1 = pd.DataFrame(Deals1)
-# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].astype(str)
-# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(['nan', 'None', ' ', 'NaN'], 'unknown')
-# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].str.strip()
-# import re
-# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=r'^\s*$', value='unknown', regex=True)
-# # Замена всех значений 'None' (которые были пропущенными) на 'unknown'
-# Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(nan, 'unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace('None', 'unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].fillna('unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='-', value='0')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=90, value='0')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='.', value='0')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='?', value='unknown')
+
+#исправление столбца 'Level of Deutsch'
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].astype(str)
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].str.strip()
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].fillna('UNKNOWN')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=r'^\s*$', value='UNKNOWN', regex=True)
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['.', 90, '-', '?', 'np.nan', 'nan', 'None', ' ', pd.NA, None], value='UNKNOWN')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='25 лет живет в Германии', value='B2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='31.05.2024', value='B2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='5 июля 2024 сдает экз на В2', value='B2')
@@ -138,8 +131,8 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='В1,
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='В1?', value='B1')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='в1-ня , в1-ая)', value='B1')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='В2 - не сдал', value='B1')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Гражданин', value='unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='гражданка', value='unknown')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Гражданин', value='UNKNOWN')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='гражданка', value='UNKNOWN')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Гражданка Германии уже год в Германии Учит немецкий и в сентябре b1 через гос-во проходит, а не через ДЖЦ, вечером учится 3 р в неделю с 18 до 21', value='unknown')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Ждем B1', value='B1')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='ждем B1', value='B1')
@@ -175,8 +168,8 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Сд
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='сдавала А2 в сентябре', value='A2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Сдала экзамен на B1, ждет в начале февраля результат', value='A2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='точно уровень не знаю, но говорить могу - учила сама', value='A1')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='УТОЧНИТЬ', value='unknown')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='УТОЧНИТЬ!', value='unknown')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='УТОЧНИТЬ', value='UNKNOWN')
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='УТОЧНИТЬ!', value='UNKNOWN')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='учит A2', value='A1')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Учится до сентября на B1', value='A2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Учится на B1', value='A2')
@@ -201,22 +194,80 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='Б2'
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace='А2-Б1', value='A2')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].str.upper()
 
+# Замена NaN значений и преобразование в строки
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].apply(lambda x: 'UNKNOWN' if pd.isna(x) or x.strip() in ['nan', 'None', ''] else str(x).strip())
+
+# переименование столбца 'Contact Name'в 'CONTACTID', т.к. из содержание совпадает (см. проверку совпадений в Contacts.ру )
+Deals1 = Deals1.rename(columns={'Contact Name': 'CONTACTID'})
+
+#преобразование дат и удаление устаревших столбцов
+Deals1['Transaction_Creation_Time'] = pd.to_datetime(Deals1['Created Time'], format='%d.%m.%Y %H:%M')
+Deals1['Transaction_Creation_Time'] = Deals1['Created Time'].dt.date
+Deals1['Closing_Date'] = pd.to_datetime(Deals1['Closing Date'], format='%d.%m.%Y %H:%M')
+Deals1['Closing_Date'] = Deals1['Closing Date'].dt.date
+Deals1.drop(columns=['Created Time', 'Closing Date'], inplace=True)
+
+Deals1['Education Type'] = Deals1['Education Type'].fillna(method='ffill')
 
 
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].fillna('unknown')
-
-# Если 'None' также представлен в столбце как строка, заменяем его на 'unknown'
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace('None', 'unknown')
-
-# Получение уникальных значений после замены
-#unique_values = Deals1['Level of Deutsch'].unique()
-print(Deals1.shape[0])
-
+# '#REF!' напрямую не заменяется; замена '#REF!' на 'WWWWW'
+Deals1['Education Type'] = Deals1['Education Type'].apply(lambda x: 'WWWWW' if pd.isna(x) or x.strip() in ['#REF!'] else str(x).strip())
+# Функция для проверки наличия 'WWWWW' в строке
+def contains_WWWWW(row):
+    return row.astype(str).str.contains('WWWWW', na=False).any()
+# Удаление строк, содержащих 'WWWWW'
+Deals1 = Deals1[~Deals1.apply(contains_WWWWW, axis=1)]
 
 
+#замена некорректных значений в 'Offer Total Amount'
+Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=['€ 2.900,00','€ 11398,00'], value=[2900,11398])
+Deals1['Course duration'] = Deals1['Course duration'].fillna(6)
 
-#print(unique_values)
-#print(Deals1['Level of Deutsch'].dtype)
-#print(Deals1.isnull().sum())
-# print(Deals1['Level of Deutsch'].unique())
-# print(Deals1.isnull().sum())
+# Удаление строк с отсутствующими значениями, без контактного лица транзакция не рассматривается
+Deals1 = Deals1.dropna(subset=['CONTACTID'])
+Deals1 = Deals1[Deals1['Transaction_Creation_Time'] <= Deals1['Closing_Date']]
+
+# Заполнение пропусков в 'Offer Total Amount' в соответствии с значениями в столбце 'Course duration'
+
+Deals1.loc[(Deals1['Course duration'] == 6) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 1000
+Deals1.loc[(Deals1['Course duration'] == 11) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 10000
+Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=[0, 1], value=1000)
+
+#очистка и подготовка данных 
+Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].replace(to_replace=[1, 6, '6',9, '€ 3.500,00'], value=[100, 600, 600, 900, 3500])
+Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].fillna(600)
+Deals1['Transaction_Creation_Time'] = pd.to_datetime(Deals1['Transaction_Creation_Time'])
+Deals1['Closing_Date'] = pd.to_datetime(Deals1['Closing_Date'])
+Deals1['Months of study'] = Deals1['Months of study'].fillna('UNKNOWN')
+Deals1['Payment Type'] = Deals1['Payment Type'].fillna('UNKNOWN')
+Deals1['Lost Reason'] = Deals1['Lost Reason'].fillna('UNKNOWN')
+Deals1['Quality'] = Deals1['Quality'].fillna('UNKNOWN')
+
+
+# Замена пропущенных значений случайными значениями из списка
+possible_values = ['Digital Marketing', 'Web Developer', 'UX/UI Design']
+# Функция для генерации случайного значения из списка
+def random_product():
+    return np.random.choice(possible_values)
+Deals1['Product'] = Deals1['Product'].apply(lambda x: random_product() if pd.isna(x) else x)
+
+# создание отдельного датафрейма с уникальными значениями из столбца 'Quality' и сохранение его в excel
+
+unique_qualities = Deals1[['Quality']].drop_duplicates().reset_index(drop=True)
+unique_qualities[['Quality_Code', 'Quality_Description']] = unique_qualities['Quality'].str.split(' - ', expand=True)
+unique_qualities.drop(columns=['Quality'], inplace=True)
+unique_qualities['Quality_Description'] = unique_qualities['Quality_Description'].fillna('UNKNOWN')
+#unique_qualities.to_excel('unique_qualities.xlsx', index=True)
+
+Deals1[['Quality_Code', 'Quality_Description']] = Deals1['Quality'].str.split(' - ', expand=True)
+Deals1.drop(columns=['Quality', 'Quality_Description'], inplace=True)
+
+#заполнение отсутствующих значений в 'Deal Owner Name' City
+Deals1['Deal Owner Name'] = Deals1['Deal Owner Name'].fillna('UNKNOWN')
+Deals1['City'] = Deals1['City'].fillna('UNKNOWN')
+
+#print(Deals1['CONTACTID'].isnull().sum())
+
+
+
+Deals1.to_excel('Deals1.xlsx', index=False)

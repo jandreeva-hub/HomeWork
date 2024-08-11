@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-Calls = pd.read_csv('Calls.csv', parse_dates = ['Call Start Time'])
+Calls = pd.read_excel('Calls.xlsx', parse_dates = ['Call Start Time'])
 Calls = Calls.drop_duplicates()
 
 Contacts = pd.read_excel("Contacts.xlsx", parse_dates = ['Created Time', 'Modified Time'])
