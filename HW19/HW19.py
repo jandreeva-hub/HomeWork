@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 from sklearn.preprocessing import OrdinalEncoder
 
 
@@ -169,7 +168,7 @@ variables = ['Year', 'Kilometers_Driven', 'Age', 'Mileage_value', 'Engine_value'
 
 # Создание фигуры и подграфиков
 fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(18, 10), sharex=False, sharey=False)
-axes = axes.flatten()  # Преобразуем массив подграфиков в плоский массив
+axes = axes.flatten()  # Преобразование массива подграфиков в плоский массив
 
 for ax, var in zip(axes, variables):
     ax.hist(dan[var], color='skyblue', bins=20, edgecolor='black')
@@ -177,13 +176,13 @@ for ax, var in zip(axes, variables):
     ax.set_xlabel(var)
     ax.set_ylabel('Частота')
 
-# Убираем неиспользуемые подграфики (если их меньше чем переменных)
+# сокрытие неиспользуемых подграфиков, если их меньше чем переменных
 for i in range(len(variables), len(axes)):
     fig.delaxes(axes[i])
 
 plt.suptitle('Распределение числовых переменных')
 
-plt.tight_layout(rect=[0, 0, 1, 0.96])  # Подгонка для общего заголовка
+plt.tight_layout(rect=[0, 0, 1, 0.96])
 plt.show()
 #dan.describe()
 
@@ -196,8 +195,7 @@ n_cols = 3
 n_rows = (n_vars + n_cols - 1) // n_cols  # Рассчитываем количество строк
 
 fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=(18, n_rows * 5), sharey=False)
-axes = axes.flatten()  # Преобразуем массив подграфиков в плоский массив
-
+axes = axes.flatten()  
 # Построение боксплотов
 for ax, var in zip(axes, boxplot_vars):
     ax.boxplot(dan[var], vert=True, patch_artist=True,
@@ -209,7 +207,7 @@ for ax, var in zip(axes, boxplot_vars):
     ax.set_xlabel('Значение')
     ax.set_ylabel('')
 
-# Убираем неиспользуемые подграфики (если их больше чем переменных)
+
 for i in range(len(boxplot_vars), len(axes)):
     fig.delaxes(axes[i])
 
@@ -292,7 +290,6 @@ sns.boxplot(y=dan['Power_value_log'], color='lightblue', ax=axes[1, 4])
 axes[1, 4].set_title('Боксплот Power_value_log')
 axes[1, 4].set_ylabel('Power_value_log')
 
-# Подгонка графиков
 plt.tight_layout()
 plt.show()
 
@@ -301,28 +298,28 @@ print(stats_log)
 
 #Проверка распределния
 from scipy import stats
+
 def kolmogorov_smirnov_test(dan, columns, alpha=0.05):
     results = []
     for col in columns:
-            
         data = dan[col].dropna()
-              
-        mean = data.mean()
-        std = data.std()
-               
-    result = 'Распределение является нормальным' if stats.kstest_p >= alpha else 'Распределение не является нормальным'
         
-    results.append({
+        
+        kstest_result = stats.kstest(data, 'norm', args=(data.mean(), data.std()))
+        
+        result = 'Распределение является нормальным' if kstest_result.pvalue >= alpha else 'Распределение не является нормальным'
+        
+        results.append({
             'Variable': col,
-            'KS Statistic': stats.kstest_stat,
-            'p-value': stats.kstest_p,
+            'KS Statistic': kstest_result.statistic,
+            'p-value': kstest_result.pvalue,
             'Result': result
         })
     
     return results
 
 columns = ['Price', 'Kilometers_Driven', 'Mileage_value', 'Engine_value', 'Power_value',
-'Price_log', 'Kilometers_Driven_log', 'Mileage_value_log', 'Engine_value_log', 'Power_value_log']
+           'Price_log', 'Kilometers_Driven_log', 'Mileage_value_log', 'Engine_value_log', 'Power_value_log']
 
 # Выполнение теста
 ks_test_results = kolmogorov_smirnov_test(dan, columns, alpha=0.05)
@@ -340,84 +337,41 @@ print(ks_results_df)
 
 # кодирование категориальных переменных
 
-unique_owner_types = sorted(dan['Owner_Type'].unique())
+# Определение правильного порядка значений
+def encode_categorical(df, column_name, correct_order=None, codes_start=1):
+    if correct_order:
+        unique_values = correct_order
+    else:
+        # Если порядок не задан, используем уникальные значения в порядке их появления
+        unique_values = sorted(df[column_name].unique())
+    
+    codes = range(codes_start, len(unique_values) + codes_start)
+    mapping_dict = dict(zip(unique_values, codes))
+    df[f'{column_name}_code'] = df[column_name].map(mapping_dict)
+    return pd.DataFrame({
+        column_name: unique_values,
+        f'{column_name}_code': codes
+    })
 
-# Правильный порядок значений и коды
-correct_order = ['First', 'Second', 'Third', 'Fourth & Above']
-correct_codes = range(1, len(correct_order) + 1)
+# правильный порядок для 'Owner_Type'
+correct_order_owner_type = ['First', 'Second', 'Third', 'Fourth & Above']
 
-print("Unique Owner Types:", unique_owner_types)
-print("Correct Order:", correct_order)
+owner_type_mapping = encode_categorical(dan, 'Owner_Type', correct_order=correct_order_owner_type)
+fuel_type_mapping = encode_categorical(dan, 'Fuel_Type')
+transmission_mapping = encode_categorical(dan, 'Transmission', codes_start=0)  # Бинарное кодирование
+marka_mapping = encode_categorical(dan, 'Marka')
 
-# Создание словаря для сопоставления правильных значений и кодов
-mapping_dict = dict(zip(correct_order, correct_codes))
+print("Owner Type Mapping:")
+print(owner_type_mapping)
+print("\nFuel Type Mapping:")
+print(fuel_type_mapping)
+print("\nTransmission Mapping:")
+print(transmission_mapping)
+print("\nMarka Mapping:")
+print(marka_mapping)
 
-# Создаем DataFrame для справки
-mapping_Owner_Type = pd.DataFrame({
-    'Owner_Type': correct_order,
-    'Owner_Type_code': correct_codes
-})
-
-# Создаем словарь для кодирования
-owner_type_mapping = dict(zip(mapping_Owner_Type['Owner_Type'], mapping_Owner_Type['Owner_Type_code']))
-
-# Применяем кодирование
-dan['Owner_Type_code'] = dan['Owner_Type'].map(owner_type_mapping)
-print(mapping_Owner_Type)
-#print(dan)
-
-unique_fuel_types = sorted(dan['Fuel_Type'].unique())
-
-fuel_type_codes = range(1, len(unique_fuel_types) + 1)
-
-fuel_type_mapping = dict(zip(unique_fuel_types, fuel_type_codes))
-
-dan['Fuel_Type_code'] = dan['Fuel_Type'].map(fuel_type_mapping)
-
-mapping_df = pd.DataFrame({
-    'Fuel_Type': unique_fuel_types,
-    'Fuel_Type_code': fuel_type_codes
-})
-
-print(mapping_df)
-# print(dan)
-
-unique_Transmission = sorted(dan['Transmission'].unique())
-
-# Создаем коды для уникальных значений (0 и 1)
-if len(unique_Transmission) == 2:
-    Transmission_codes = [0, 1]
-else:
-    raise ValueError("Бинарное кодирование применимо только к столбцам с двумя уникальными значениями.")
-
-Transmission_mapping = dict(zip(unique_Transmission, Transmission_codes))
-
-dan['Transmission_code'] = dan['Transmission'].map(Transmission_mapping)
-
-mapping_Transmission = pd.DataFrame({
-    'Transmission': unique_Transmission,
-    'Transmission_code': Transmission_codes
-})
-
-print(mapping_Transmission)
-#print(dan)
-
-# Определяем уникальные значения в колонке 'Marka'
-unique_Marka = sorted(dan['Marka'].unique())
-
-Marka_codes = range(1, len(unique_Marka) + 1)
-
-Marka_mapping = dict(zip(unique_Marka, Marka_codes))
-
-dan['Marka_code'] = dan['Marka'].map(Marka_mapping)
-
-mapping_Marka = pd.DataFrame({
-    'Marka': unique_Marka,
-    'Marka_code': Marka_codes
-})
-
-print(mapping_Marka)
-	
+print("\nUpdated DataFrame:")
+print(dan.head())
 
 dan = dan.drop(columns=['Transmission', 'Fuel_Type', 'Owner_Type'])
 
@@ -453,7 +407,7 @@ top_10_markas.plot(kind='bar', color='skyblue', edgecolor='black')
 plt.title('Топ-10 распределение значений Marka')
 plt.xlabel('Марка')
 plt.ylabel('Частота')
-plt.xticks(rotation=45, ha='right')  # Поворот меток оси x для улучшения читаемости
+plt.xticks(rotation=45, ha='right') 
 
 plt.tight_layout()
 plt.show()
@@ -501,7 +455,6 @@ ax.grid(True)
 plt.tight_layout()
 plt.show()
 
- #Выбор нужных столбцов
 selected_columns = ['Kilometers_Driven', 'Age', 'Mileage_value', 'Engine_value', 'Power_value', 'Price']
 dan_subset = dan[selected_columns]
 
@@ -529,7 +482,6 @@ for i in range(len(selected_columns)):
         if i != j:
             ax = pairplot.axes[i, j]
             corr_value = correlation_matrix.iloc[i, j]
-            # Добавление текста с корреляцией на график
             ax.annotate(f'{corr_value:.2f}', xy=(0.5, 0.5), xycoords='axes fraction',
                         ha='center', va='center', fontsize=10, color='red', bbox=dict(facecolor='white', alpha=0.8))
             # Удаление графиков с корреляцией ниже порога
@@ -548,16 +500,14 @@ plt.show()
 # Создание списка категориальных переменных для анализа
 categorical_columns = ['Transmission_code', 'Owner_Type_code', 'Engine_value', 'Seats', 'Marka', 'Age']
 
-# Настройка размера графиков
 fig, axes = plt.subplots(nrows=len(categorical_columns), ncols=2, figsize=(12, 3 * len(categorical_columns)), sharex=False)
 
 # Построение столбчатых диаграмм для каждой категориальной переменной
 for i, col in enumerate(categorical_columns):
-    # Средние значения Price и Price_log по каждой категории
     mean_price = dan.groupby(col)['Price'].mean()
     mean_price_log = dan.groupby(col)['Price_log'].mean()
     
-    # # Средние значения Age по каждой категории (для добавления в график)
+    # Средние значения Age по каждой категории (для добавления в график)
     # mean_age = dan.groupby(col)['Age'].mean()
 
     # Столбчатая диаграмма для Price
@@ -583,7 +533,6 @@ for i, col in enumerate(categorical_columns):
           
 # f'{value:.1f}', color='black', ha='center', va='bottom')
 
-# Корректировка графиков
 plt.tight_layout()
 plt.suptitle('Взаимосвязь переменных с Price и Price_log', y=1.02)
 plt.show()
@@ -631,11 +580,11 @@ plt.show()
 # print("Количество пропусков в каждом столбце:")
 # print(missing_values)
 
-#Заполнение пропусков New_Price_value в зависимости отсвязанных переменных
+#Заполнение пропусков New_Price_value в зависимости от связанных переменных
 from sklearn.linear_model import LinearRegression
 from sklearn.impute import SimpleImputer
 
-# Отделяем строки с известными и неизвестными значениями 'New_Price_value'
+# Отделение строк с известными и неизвестными значениями 'New_Price_value'
 dan_known = dan[dan['New_Price_value'].notna()]
 dan_missing = dan[dan['New_Price_value'].isna()]
 
@@ -643,7 +592,7 @@ dan_missing = dan[dan['New_Price_value'].isna()]
 if dan_missing.empty:
     print("Нет строк с пропущенными значениями в 'New_Price_value'.")
 else:
-    # Определяем независимые переменные и целевую переменную
+    # Определение независимых переменных и целевой переменной
     X_known = dan_known[['Mileage_value', 'Engine_value', 'Power_value', 'Seats', 'Price', 'Marka_code']]
     y_known = dan_known['New_Price_value']
 
@@ -680,7 +629,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
-# Определяем независимые переменные и целевую переменную
+# Определение независимых переменных и целевой переменной
 X = dan[['Kilometers_Driven', 'Age', 'Engine_value', 'Power_value']]
 y = dan['Price']
 
@@ -722,7 +671,7 @@ from scipy.stats import f_oneway
 # список уникальных марок
 unique_markas = dan['Marka'].unique()
 
-# Создаем список для хранения цен по маркам
+# Создание списка для хранения цен по маркам
 price_by_marka = [dan[dan['Marka'] == marka]['Price'].dropna() for marka in unique_markas]
 
 # Выполнение ANOVA
@@ -731,5 +680,5 @@ f_stat, p_value = f_oneway(*price_by_marka)
 print("Статистика F:", f_stat)
 print("p-значение:", p_value)
 
-# p-значение: 0.0 <0.05 предположение подтвердилось, 
+# p-значение: 0.0 <0.05, предположение подтвердилось, 
 # цена зависит от марки автомобиля
