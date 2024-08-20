@@ -1,32 +1,31 @@
 import numpy as np
 import pandas as pd
 
-import pandas as pd
+Deals = pd.read_excel("Deals.xlsx")
+Deals['Quality'] = Deals['Quality'].fillna('UNKNOWN')  
+# # Определение правильного порядка значений
+# def encode_categorical(df, column_name, correct_order=None, codes_start=0):
+#     if correct_order:
+#         unique_values = correct_order
+#     else:
+#         # Если порядок не задан, используем уникальные значения в порядке их появления
+#         unique_values = sorted(df[column_name].unique())
+    
+#     codes = range(codes_start, len(unique_values) + codes_start)
+#     mapping_dict = dict(zip(unique_values, codes))
+#     df[f'{column_name}_code'] = df[column_name].map(mapping_dict)
+#     return pd.DataFrame({
+#         column_name: unique_values,
+#         f'{column_name}_code': codes
+#     })
 
-# Пример исходного DataFrame
-# Deals1 = pd.read_csv('your_data.csv')  # Загрузка вашего DataFrame из файла, если нужно
+# # правильный порядок для 'Quality'
+# correct_order_Level_of_Deutsch = ['0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'UNKNOWN']
+# correct_order_Quality = ['A', 'B', 'C', 'D', 'E', 'UNKNOWN']
+# Level_of_Deutsch_mapping = encode_categorical(Deals, 'Level of Deutsch', correct_order=correct_order_Level_of_Deutsch)
+# Quality_mapping = encode_categorical(Deals, 'Quality', correct_order=correct_order_Quality)
 
-# Шаг 1: Создание DataFrame с уникальными значениями и сохранение в Excel
-unique_qualities = Deals1[['Quality']].drop_duplicates().reset_index(drop=True)
-unique_qualities[['Quality_Code', 'Quality_Description']] = unique_qualities['Quality'].str.split(' - ', expand=True)
-unique_qualities.drop(columns=['Quality'], inplace=True)
-unique_qualities['Quality_Description'] = unique_qualities['Quality_Description'].fillna('UNKNOWN')
-
-# Сохраняем уникальные качества в Excel
-unique_qualities.to_excel('unique_qualities.xlsx', index=False)
-
-# Шаг 2: Разделение столбца 'Quality' на 'Quality_Code' и 'Quality_Description' в исходном DataFrame
-Deals1[['Quality_Code', 'Quality_Description']] = Deals1['Quality'].str.split(' - ', expand=True)
-Deals1.drop(columns=['Quality'], inplace=True)
-
-# Шаг 3: Загрузка уникальных значений и создание словаря для замены
-unique_qualities = pd.read_excel('unique_qualities.xlsx')
-
-# Создаем словарь для преобразования описаний в коды
-quality_dict = unique_qualities.set_index('Quality_Description')['Quality_Code'].to_dict()
-
-# Кодируем значения в 'Quality_Description' на основе словаря
-Deals1['Quality_Code'] = Deals1['Quality_Description'].map(quality_dict)
-
-# Сохранение обновленного DataFrame, если необходимо
-Deals1.to_excel('updated_deals1.xlsx', index=False)
+# print(Level_of_Deutsch_mapping)
+# print(Quality_mapping)
+#print(Deals.head())
+print(Deals.isnull().sum())

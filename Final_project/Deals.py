@@ -1,12 +1,18 @@
 import numpy as np
 import pandas as pd
-#import re
+
 
 Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
 Deals1 = Deals1.drop_duplicates()
 #print(Deals.isnull().sum())
 Deals1 = Deals1.dropna(how='all')
 #print(Deals.info)
+#заполнение отсутствующих значений
+Deals1[['Deal Owner Name', 'Quality']] = Deals1[['Deal Owner Name', 'Quality']].fillna('UNKNOWN')
+Deals1['City'] = Deals1['City'].fillna('UNKNOWN')
+Deals1['City'] = Deals1['City'].replace(to_replace=['-'] , value='UNKNOWN', regex=False)
+ 
+
 #исправление столбца 'Level of Deutsch'
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Detmold, Paulinenstraße 95, 32756', 'f2', '.', 90, '-', '?', 'np.nan', 'nan', 'None', ' ', pd.NA, None, 'Thorn-Prikker-Str. 30, Hagen, 58093', 'Paderborn 33102, Schwabenweg 10', '31.05.2024', 'Lichtenfelser Straße 25, Untersiemau 96253', 'гражданка', 'Гражданин', '25 лет живет в Германии', 'не сдавал, но гражданин',  'Нет сертификатов, но есть С1 англ, неоконченное высшее в ИТ (и еще одно высшее юридическое) , очень хочет в ИТ, сильно замотивирована именно н', 'УТОЧНИТЬ!', 'УТОЧНИТЬ'], value='UNKNOWN')
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['lэкзамен - 6 июля на В1. курсы вечером (но уверенно говорит на B1)','б1', 'b1', 'B1', 'В1','в1','В','Б1','b1+', 'в1-в2','В1-В2','Б1 ( ждет Б2)','ЯЗ: нем В1 был экз 03.05 повтор и сейчас ждет результаты. Технический англ был. А1 сейчас. ОБР: 2 во информационные и комп сети - инженер системоте', 'b1 (B2 ждет серт)', 'b1 (b2 в июле экзамен)', 'B1, сдает B2 в апреле', 'B1 (ждет результаты В2)', 'b1 (b2 15 марта экзамен)', 'Б1 ( ждет итог Б2)', 'Б1 ( проходит Б2)', 'НЯ - В1, АЯ - В1', 'в1-ня , в1-ая', 'B1 (B2 должна до конца февраля получить)', 'b1 (b2 экзамен 6 февраля)', 'В1, может уже В2?', 'Б10Б2', 'Б1?', 'B1 есть, ждем B2 в конце месяца', 'B1-B2', 'Сдавал 8 12 на B1 - ждет результат. 3 01 - аплейт - получил B1!', 'Б1-Б2', 'б1 (до июля на В2)', 'в1, идет на в2', 'b2-c1', 'b1-b2', 'Б1 ( проходит Б2 )', 'b1 (учила, но не сдала В2)', 'в1, еще нет сертификата', 'б1-б2', 'Бй', 'в1 , хочет совмещать с в2', 'в1 (уже сдала В2)', 'B1 (до февраля)', 'B1 (B2 экзамен в январе)', 'В1?', 'b1 (b2 экзамен 2 марта)', 'B1 немецкий и английский Advance', 'B2 (ждет итог экзамена)', 'b1 (b2 не сдал экзамен)', 'В1 (учится на В2 до авг.', 'В2 - не сдал', 'B1 вроде был (18 лет назад сдавал)', 'b2 ждет серт', 'В1, учится на В2 до няоб 24', 'Б1 ( ждет результат Б2)', 'В1 (учится на В2 уже)', 'В январе - В2 сдает'], value='B1', regex=False)
@@ -17,28 +23,50 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Ж�
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['точно уровень не знаю, но говорить могу - учила сама', 'а1' ,  'A1', 'А1' , 'А1 сертиф, но по факту А2', 'С1 -ая , Ня -а1', 'А1-А2', 'А2 ( скоро екзамен)', 'учит A2', 'курс А2-В1 - сдача в июле, но вечерняя смена инт курсов, настроен получить гутшайн уже сейчас.' , 'A1-A2',  'а1-а2 , ая свободный', 'не учила ( разговорный) сразу пошла работать', 'a0-a1', 'немецкий - а1-а2, англ b1-b2', 'A', 'разговорный из украины, без сертификата', 'сдавала А2 в сентябре', 'точно уровень не знаю, но говорить могу - учила сама' 'А2-В1 учит'], value='A1', regex=False)
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=[ 0,'ня-0, но англ B2+', 'не учил', 'ня-0, ая-B1', 'никакой', 'идет на А1', 'ая в1', 'нулевой уровень, только пошел на курсы.', 'Нет', 'а0' , 'A0', 'А0'] , value='0', regex=False)
 
-# Определение порядка кодирования
-levels = ['0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'UNKNOWN']
+ 
+# Определение правильного порядка значений
+def encode_categorical(df, column_name, correct_order=None, codes_start=0):
+     if correct_order:
+         unique_values = correct_order
+     else:
+         # Если порядок не задан, используем уникальные значения в порядке их появления
+         unique_values = sorted(df[column_name].unique())
+    
+     codes = range(codes_start, len(unique_values) + codes_start)
+     mapping_dict = dict(zip(unique_values, codes))
+     df[f'{column_name}_code'] = df[column_name].map(mapping_dict)
+     return pd.DataFrame({
+         column_name: unique_values,
+         f'{column_name}_code': codes
+     })
 
-# Создание словарей для кодирования и декодирования
-encoding_dict = {level: idx for idx, level in enumerate(levels)}
-decoding_dict = {idx: level for idx, level in enumerate(levels)}
+# правильный порядок для 'Quality'
+correct_order_Level_of_Deutsch = ['0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'UNKNOWN']
+correct_order_Quality = ['A - High', 'B - Medium', 'C - Low', 'D - Non Target', 'E - Non Qualified', 'UNKNOWN']
+Level_of_Deutsch_mapping = encode_categorical(Deals1, 'Level of Deutsch', correct_order=correct_order_Level_of_Deutsch)
+Quality_mapping = encode_categorical(Deals1, 'Quality', correct_order=correct_order_Quality)
 
-# Кодирование значений
-Deals1['Level of Deutsch Encoded'] = Deals1['Level of Deutsch'].map(encoding_dict)
 
-# Вывод результатов
-# print("DataFrame с закодированными значениями:")
-# print(Deals1['Level of Deutsch Encoded'])
+# Проверяем, что 'Quality' действительно является строковым столбцом
+Quality_mapping['Quality'] = Quality_mapping['Quality'].astype(str)
 
-# Справочная таблица
-reference_table = pd.DataFrame(list(decoding_dict.items()), columns=['Code', 'Level of Deutsch'])
-#print(reference_table)
+# # Разделение столбца 'Quality' на два новых столбца
+Quality_mapping[['Category', 'Description']] = Quality_mapping['Quality'].str.split(' - ', expand=True)
+# # Обработка строк, которые не содержат ' - ' (например, 'UNKNOWN')
+Quality_mapping['Description'] = Quality_mapping['Description'].fillna(Quality_mapping['Quality'])
+Quality_mapping['Category'] = Quality_mapping['Category'].replace({'UNKNOWN': 'Unknown Category'})
+
+# # Удаление старого столбца
+Quality_mapping = Quality_mapping.drop(columns='Quality')
+
+
+
+# print(Level_of_Deutsch_mapping)
+print(Quality_mapping)
+
 
 # Получение распределения уникальных значений в столбце 'Level of Deutsch'
-value_counts = Deals1['Level of Deutsch Encoded'].value_counts()
-
-# Вывод результата
+# value_counts = Deals1['Level of Deutsch Encoded'].value_counts()
 # print("Распределение уникальных значений в столбце 'Level of Deutsch Encoded':")
 # print(value_counts)
 
@@ -96,35 +124,5 @@ def random_product():
     return np.random.choice(possible_values)
 Deals1['Product'] = Deals1['Product'].apply(lambda x: random_product() if pd.isna(x) else x)
 
-# # создание отдельного датафрейма с уникальными значениями из столбца 'Quality' и сохранение его в excel
 
-unique_qualities = Deals1[['Quality']].drop_duplicates().reset_index(drop=True)
-unique_qualities[['Quality_Code', 'Quality_Description']] = unique_qualities['Quality'].str.split(' - ', expand=True)
-unique_qualities.drop(columns=['Quality'], inplace=True)
-unique_qualities['Quality_Description'] = unique_qualities['Quality_Description'].fillna('UNKNOWN')
-
-
-Deals1[['Quality_Code', 'Quality_Description']] = Deals1['Quality'].str.split(' - ', expand=True)
-#Deals1.drop(columns=['Quality', 'Quality_Description'], inplace=True)
-
-# Определение порядка кодирования
-levels = ['A', 'B', 'C', 'D', 'E', 'UNKNOWN']
-
-# Создание словарей для кодирования и декодирования
-encoding_dict = {level: idx for idx, level in enumerate(levels)}
-decoding_dict = {idx: level for idx, level in enumerate(levels)}
-
-# Кодирование значений
-Deals1['Quality_Code'] = Deals1['Quality_Code'].map(encoding_dict)
-
-# Справочная таблица
-unique_qualities.xlsx = pd.DataFrame(list(decoding_dict.items()), columns=['Code', 'Quality', 'Quality_Description'])
-#unique_qualities.to_excel('unique_qualities.xlsx', index=True)
-print(unique_qualities.xlsx)
-
-
-#заполнение отсутствующих значений в 'Deal Owner Name' City
-Deals1['Deal Owner Name'] = Deals1['Deal Owner Name'].fillna('UNKNOWN')
-Deals1['City'] = Deals1['City'].fillna('UNKNOWN')
-Deals1['City'] = Deals1['City'].replace(to_replace=['-'] , value='UNKNOWN', regex=False)
 Deals1.to_excel('Deals1.xlsx', index=False)
