@@ -124,5 +124,10 @@ def random_product():
     return np.random.choice(possible_values)
 Deals1['Product'] = Deals1['Product'].apply(lambda x: random_product() if pd.isna(x) else x)
 
+Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term'])
+#Deals1.to_excel('Deals1.xlsx', index=False)
 
-Deals1.to_excel('Deals1.xlsx', index=False)
+
+Deals1_describe_stats = Deals1.describe().T  # Make sure to call describe() method
+#print(Deals1_describe_stats)
+Deals1_describe_stats.to_excel('Deals1_describe_stats.xlsx', engine='openpyxl')

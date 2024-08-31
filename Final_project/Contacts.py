@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+from datetime import datetime
 Calls = pd.read_excel('Calls.xlsx', parse_dates = ['Call Start Time'])
 Calls = Calls.drop_duplicates()
 
@@ -31,14 +31,13 @@ C_C['Modified_Date'] = pd.to_datetime(C_C['Modified Time'], format='%d.%m.%Y %H:
 C_C['Modified_Date'] = C_C['Modified Time'].dt.date
 C_C.drop(columns=['Call Start Time', 'Created Time', 'Modified Time'], inplace=True)
 
-date_cols = ['Call_Start_Date', 'Created_Date', 'Modified_Date']
-C_C[date_cols] = C_C[date_cols].astype("datetime64[ns]")
 
-# print(C_C.dtypes)
+print(C_C.dtypes)
 # print(C_C.head())
 #C_C.to_excel('C_C.xlsx', index=False)
 
-Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
-print(C_C['CONTACTID']. isin (Deals1['Contact Name']). value_counts ())
-print(Deals1.shape[0])
-print(C_C.shape[0])
+#проверка совпадения 
+# Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
+# print(C_C['CONTACTID']. isin (Deals1['Contact Name']). value_counts ())
+# print(Deals1.shape[0])
+#print(C_C.shape[0])
