@@ -1,17 +1,31 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-
-Deals1 = pd.read_excel("Deals.xlsx", parse_dates = ['Closing Date', 'Created Time'])
+Deals1 = pd.read_excel(
+    'Deals (Done) (1).xlsx',
+    dtype={
+        'Contact Name': 'str',
+        'Id': 'str',
+        },
+    parse_dates=[
+        'SLA',
+        'Created',
+        'Closing Date'
+    ]
+)
+print(Deals1.dtypes)
 Deals1 = Deals1.drop_duplicates()
 #print(Deals.isnull().sum())
 Deals1 = Deals1.dropna(how='all')
-#print(Deals.info)
+
 #заполнение отсутствующих значений
 Deals1[['Deal Owner Name', 'Quality']] = Deals1[['Deal Owner Name', 'Quality']].fillna('UNKNOWN')
 Deals1['City'] = Deals1['City'].fillna('UNKNOWN')
 Deals1['City'] = Deals1['City'].replace(to_replace=['-'] , value='UNKNOWN', regex=False)
- 
+
+
 
 #исправление столбца 'Level of Deutsch'
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Detmold, Paulinenstraße 95, 32756', 'f2', '.', 90, '-', '?', 'np.nan', 'nan', 'None', ' ', pd.NA, None, 'Thorn-Prikker-Str. 30, Hagen, 58093', 'Paderborn 33102, Schwabenweg 10', '31.05.2024', 'Lichtenfelser Straße 25, Untersiemau 96253', 'гражданка', 'Гражданин', '25 лет живет в Германии', 'не сдавал, но гражданин',  'Нет сертификатов, но есть С1 англ, неоконченное высшее в ИТ (и еще одно высшее юридическое) , очень хочет в ИТ, сильно замотивирована именно н', 'УТОЧНИТЬ!', 'УТОЧНИТЬ'], value='UNKNOWN')
@@ -23,14 +37,14 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Ж�
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['точно уровень не знаю, но говорить могу - учила сама', 'а1' ,  'A1', 'А1' , 'А1 сертиф, но по факту А2', 'С1 -ая , Ня -а1', 'А1-А2', 'А2 ( скоро екзамен)', 'учит A2', 'курс А2-В1 - сдача в июле, но вечерняя смена инт курсов, настроен получить гутшайн уже сейчас.' , 'A1-A2',  'а1-а2 , ая свободный', 'не учила ( разговорный) сразу пошла работать', 'a0-a1', 'немецкий - а1-а2, англ b1-b2', 'A', 'разговорный из украины, без сертификата', 'сдавала А2 в сентябре', 'точно уровень не знаю, но говорить могу - учила сама' 'А2-В1 учит'], value='A1', regex=False)
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=[ 0,'ня-0, но англ B2+', 'не учил', 'ня-0, ая-B1', 'никакой', 'идет на А1', 'ая в1', 'нулевой уровень, только пошел на курсы.', 'Нет', 'а0' , 'A0', 'А0'] , value='0', regex=False)
 
- 
+# кодирование столбцов 'Quality' и 'Level of Deutsch'
 # Определение правильного порядка значений
 def encode_categorical(df, column_name, correct_order=None, codes_start=0):
      if correct_order:
          unique_values = correct_order
-     else:
-         # Если порядок не задан, используем уникальные значения в порядке их появления
-         unique_values = sorted(df[column_name].unique())
+    #  else:
+    #      # Если порядок не задан, используем уникальные значения в порядке их появления
+    #      unique_values = sorted(df[column_name].unique())
     
      codes = range(codes_start, len(unique_values) + codes_start)
      mapping_dict = dict(zip(unique_values, codes))
@@ -40,17 +54,14 @@ def encode_categorical(df, column_name, correct_order=None, codes_start=0):
          f'{column_name}_code': codes
      })
 
-# правильный порядок для 'Quality'
+# правильный порядок для 'Quality' и 'Level of Deutsch'
 correct_order_Level_of_Deutsch = ['0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'UNKNOWN']
 correct_order_Quality = ['A - High', 'B - Medium', 'C - Low', 'D - Non Target', 'E - Non Qualified', 'UNKNOWN']
 Level_of_Deutsch_mapping = encode_categorical(Deals1, 'Level of Deutsch', correct_order=correct_order_Level_of_Deutsch)
 Quality_mapping = encode_categorical(Deals1, 'Quality', correct_order=correct_order_Quality)
 
 
-# Проверяем, что 'Quality' действительно является строковым столбцом
-Quality_mapping['Quality'] = Quality_mapping['Quality'].astype(str)
-
-# # Разделение столбца 'Quality' на два новых столбца
+# Разделение столбца 'Quality' на два новых столбца
 Quality_mapping[['Category', 'Description']] = Quality_mapping['Quality'].str.split(' - ', expand=True)
 # # Обработка строк, которые не содержат ' - ' (например, 'UNKNOWN')
 Quality_mapping['Description'] = Quality_mapping['Description'].fillna(Quality_mapping['Quality'])
@@ -59,28 +70,19 @@ Quality_mapping['Category'] = Quality_mapping['Category'].replace({'UNKNOWN': 'U
 # # Удаление старого столбца
 Quality_mapping = Quality_mapping.drop(columns='Quality')
 
-
-
 # print(Level_of_Deutsch_mapping)
-print(Quality_mapping)
+# print(Quality_mapping)
+# print(Level_of_Deutsch_mapping)
 
-
+Quality_mapping.to_excel('Quality_mapping.xlsx', index=False)
+Level_of_Deutsch_mapping.to_excel('Level_of_Deutsch_mapping.xlsx', index=False)
 # Получение распределения уникальных значений в столбце 'Level of Deutsch'
 # value_counts = Deals1['Level of Deutsch Encoded'].value_counts()
 # print("Распределение уникальных значений в столбце 'Level of Deutsch Encoded':")
 # print(value_counts)
 
 # переименование столбца 'Contact Name'в 'CONTACTID', т.к. иx содержание совпадает (см. проверку совпадений в Contacts.ру )
-Deals1 = Deals1.rename(columns={'Contact Name': 'CONTACTID'})
-
-#преобразование дат и удаление устаревших столбцов
-Deals1['Transaction_Creation_Time'] = pd.to_datetime(Deals1['Created Time'], format='%d.%m.%Y %H:%M')
-Deals1['Transaction_Creation_Time'] = Deals1['Created Time'].dt.date
-Deals1['Closing_Date'] = pd.to_datetime(Deals1['Closing Date'], format='%d.%m.%Y %H:%M')
-Deals1['Closing_Date'] = Deals1['Closing Date'].dt.date
-Deals1.drop(columns=['Created Time', 'Closing Date'], inplace=True)
-
-Deals1['Education Type'] = Deals1['Education Type'].fillna(method='ffill')
+#Deals1 = Deals1.rename(columns={'Contact Name': 'CONTACT ID'})
 
 
 # '#REF!' напрямую не заменяется; замена '#REF!' на 'WWWWW'
@@ -92,42 +94,35 @@ def contains_WWWWW(row):
 Deals1 = Deals1[~Deals1.apply(contains_WWWWW, axis=1)]
 
 
-#замена некорректных значений в 'Offer Total Amount'
-Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=['€ 2.900,00','€ 11398,00'], value=[2900,11398])
-Deals1['Course duration'] = Deals1['Course duration'].fillna(6)
-
 # Удаление строк с отсутствующими значениями, без контактного лица транзакция не рассматривается
-Deals1 = Deals1.dropna(subset=['CONTACTID'])
-Deals1 = Deals1[Deals1['Transaction_Creation_Time'] <= Deals1['Closing_Date']]
+Deals1 = Deals1.dropna(subset=['Contact Name'])
+#Deals1 = Deals1[Deals1['Created'] <= Deals1['Closing Date']]
 
-# Заполнение пропусков в 'Offer Total Amount' в соответствии с значениями в столбце 'Course duration'
 
-Deals1.loc[(Deals1['Course duration'] == 6) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 1000
-Deals1.loc[(Deals1['Course duration'] == 11) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 10000
-Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=[0, 1], value=1000)
 
+
+#приведение дат в хронологический порядок
+mask = Deals1['Closing Date'] < Deals1['Created']
+Deals1.loc[mask, ['Closing Date', 'Created']] = Deals1.loc[mask, ['Created', 'Closing Date']].values
 #очистка и подготовка данных 
 Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].replace(to_replace=[1, 6, '6',9, '€ 3.500,00'], value=[100, 600, 600, 900, 3500])
 Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].fillna(600)
-Deals1['Transaction_Creation_Time'] = pd.to_datetime(Deals1['Transaction_Creation_Time'])
-Deals1['Closing_Date'] = pd.to_datetime(Deals1['Closing_Date'])
 Deals1['Months of study'] = Deals1['Months of study'].fillna('UNKNOWN')
 Deals1['Payment Type'] = Deals1['Payment Type'].fillna('UNKNOWN')
-Deals1['Lost Reason'] = Deals1['Lost Reason'].fillna('UNKNOWN')
 Deals1['Quality'] = Deals1['Quality'].fillna('UNKNOWN')
 
+Deals1 = Deals1.drop(columns=['Unnamed: 16'])
+# Заполнение пропусков в 'Offer Total Amount' в соответствии с значениями в столбце 'Course duration'
 
-# Замена пропущенных значений случайными значениями из списка
-possible_values = ['Digital Marketing', 'Web Developer', 'UX/UI Design']
-# Функция для генерации случайного значения из списка
-def random_product():
-    return np.random.choice(possible_values)
-Deals1['Product'] = Deals1['Product'].apply(lambda x: random_product() if pd.isna(x) else x)
+# Deals1.loc[(Deals1['Course duration'] == 6) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 1000
+# Deals1.loc[(Deals1['Course duration'] == 11) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 10000
+Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=[1], value=1000)
+Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term', 'Lost Reason'])
 
-Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term'])
-#Deals1.to_excel('Deals1.xlsx', index=False)
+#Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].fillna(0) #замена на 0 для расчета статистики
+Deals1['Initial Amount Paid'] = pd.to_numeric(Deals1['Initial Amount Paid'], errors='coerce')
+Deals1['Offer Total Amount'] = pd.to_numeric(Deals1['Offer Total Amount'], errors='coerce')
+print(Deals1.dtypes)
+Deals1.to_excel('Deals1.xlsx', index=False)
 
 
-Deals1_describe_stats = Deals1.describe().T  # Make sure to call describe() method
-#print(Deals1_describe_stats)
-Deals1_describe_stats.to_excel('Deals1_describe_stats.xlsx', engine='openpyxl')
