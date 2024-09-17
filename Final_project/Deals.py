@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from datetime import datetime, timedelta
 Deals1 = pd.read_excel(
     'Deals (Done) (1).xlsx',
     dtype={
@@ -105,11 +105,17 @@ Deals1 = Deals1.dropna(subset=['Contact Name'])
 mask = Deals1['Closing Date'] < Deals1['Created']
 Deals1.loc[mask, ['Closing Date', 'Created']] = Deals1.loc[mask, ['Created', 'Closing Date']].values
 #очистка и подготовка данных 
-Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].replace(to_replace=[1, 6, '6',9, '€ 3.500,00'], value=[100, 600, 600, 900, 3500])
+Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].replace(to_replace=[1, 6, '6',9, '€ 3.500,00', 11000, 11500], value=[100, 600, 600, 900, 3500, 1100, 1150])
 Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].fillna(600)
 Deals1['Months of study'] = Deals1['Months of study'].fillna('UNKNOWN')
 Deals1['Payment Type'] = Deals1['Payment Type'].fillna('UNKNOWN')
 Deals1['Quality'] = Deals1['Quality'].fillna('UNKNOWN')
+
+#удаление даты из будущего
+Deals1['Closing Date'] = pd.to_datetime(Deals1['Closing Date'], format='%d-%m-%Y %H:%M:%S', errors='coerce')
+# Фильтрация строк: оставляем все строки, кроме той, где Closing Date = '25-09-2024 00:00:00'
+Deals1 = Deals1[Deals1['Closing Date'] != pd.Timestamp('2024-09-25 00:00:00')]
+
 
 Deals1 = Deals1.drop(columns=['Unnamed: 16'])
 # Заполнение пропусков в 'Offer Total Amount' в соответствии с значениями в столбце 'Course duration'
@@ -119,10 +125,28 @@ Deals1 = Deals1.drop(columns=['Unnamed: 16'])
 Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=[1], value=1000)
 Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term', 'Lost Reason'])
 
-#Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].fillna(0) #замена на 0 для расчета статистики
 Deals1['Initial Amount Paid'] = pd.to_numeric(Deals1['Initial Amount Paid'], errors='coerce')
 Deals1['Offer Total Amount'] = pd.to_numeric(Deals1['Offer Total Amount'], errors='coerce')
+
+# Функция для преобразования строки SLA в количество минут
+def convert_sla_to_minutes(sla_str):
+    if pd.isna(sla_str):  # Проверка на NaN
+        return None
+    if isinstance(sla_str, float):  # Пропуск значений типа float
+        return None
+    # Преобразуем строку в timedelta
+    timedelta_obj = pd.to_timedelta(sla_str)
+    # Рассчитываем количество минут (timedelta.total_seconds() / 60)
+    return int(timedelta_obj.total_seconds() // 60)
+
+# Применяем функцию к столбцу SLA
+Deals1['SLA_minutes'] = Deals1['SLA'].apply(convert_sla_to_minutes)
+Deals1 = Deals1.drop(columns='SLA')
+
 print(Deals1.dtypes)
+
+
+
 Deals1.to_excel('Deals1.xlsx', index=False)
 
 

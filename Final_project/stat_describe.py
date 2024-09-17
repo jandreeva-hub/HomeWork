@@ -38,7 +38,7 @@ def compute_stats(df, columns):
 # Вычисление статистики для Calls, Spend и Deals1
 Calls_stats = compute_stats(Calls, ['Call Duration (in seconds)'])
 Spend_stats = compute_stats(Spend, ['Impressions', 'Spend', 'Clicks'])
-Deals1_stats = compute_stats(Deals1, ['Initial Amount Paid', 'Offer Total Amount'])
+Deals1_stats = compute_stats(Deals1, ['Initial Amount Paid', 'Offer Total Amount','SLA_minutes'])
 
 # Добавление категории
 Calls_stats['Category'] = 'Calls'
