@@ -147,6 +147,6 @@ print(Deals1.dtypes)
 
 
 
-Deals1.to_excel('Deals1.xlsx', index=False)
+#Deals1.to_excel('Deals1.xlsx', index=False)
 
 
