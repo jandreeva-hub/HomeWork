@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime, timedelta
+
 Deals1 = pd.read_excel(
     'Deals (Done) (1).xlsx',
     dtype={
@@ -25,11 +26,9 @@ Deals1[['Deal Owner Name', 'Quality']] = Deals1[['Deal Owner Name', 'Quality']].
 Deals1['City'] = Deals1['City'].fillna('UNKNOWN')
 Deals1['City'] = Deals1['City'].replace(to_replace=['-'] , value='UNKNOWN', regex=False)
 
-
-
 #исправление столбца 'Level of Deutsch'
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Detmold, Paulinenstraße 95, 32756', 'f2', '.', 90, '-', '?', 'np.nan', 'nan', 'None', ' ', pd.NA, None, 'Thorn-Prikker-Str. 30, Hagen, 58093', 'Paderborn 33102, Schwabenweg 10', '31.05.2024', 'Lichtenfelser Straße 25, Untersiemau 96253', 'гражданка', 'Гражданин', '25 лет живет в Германии', 'не сдавал, но гражданин',  'Нет сертификатов, но есть С1 англ, неоконченное высшее в ИТ (и еще одно высшее юридическое) , очень хочет в ИТ, сильно замотивирована именно н', 'УТОЧНИТЬ!', 'УТОЧНИТЬ'], value='UNKNOWN')
-Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['lэкзамен - 6 июля на В1. курсы вечером (но уверенно говорит на B1)','б1', 'b1', 'B1', 'В1','в1','В','Б1','b1+', 'в1-в2','В1-В2','Б1 ( ждет Б2)','ЯЗ: нем В1 был экз 03.05 повтор и сейчас ждет результаты. Технический англ был. А1 сейчас. ОБР: 2 во информационные и комп сети - инженер системоте', 'b1 (B2 ждет серт)', 'b1 (b2 в июле экзамен)', 'B1, сдает B2 в апреле', 'B1 (ждет результаты В2)', 'b1 (b2 15 марта экзамен)', 'Б1 ( ждет итог Б2)', 'Б1 ( проходит Б2)', 'НЯ - В1, АЯ - В1', 'в1-ня , в1-ая', 'B1 (B2 должна до конца февраля получить)', 'b1 (b2 экзамен 6 февраля)', 'В1, может уже В2?', 'Б10Б2', 'Б1?', 'B1 есть, ждем B2 в конце месяца', 'B1-B2', 'Сдавал 8 12 на B1 - ждет результат. 3 01 - аплейт - получил B1!', 'Б1-Б2', 'б1 (до июля на В2)', 'в1, идет на в2', 'b2-c1', 'b1-b2', 'Б1 ( проходит Б2 )', 'b1 (учила, но не сдала В2)', 'в1, еще нет сертификата', 'б1-б2', 'Бй', 'в1 , хочет совмещать с в2', 'в1 (уже сдала В2)', 'B1 (до февраля)', 'B1 (B2 экзамен в январе)', 'В1?', 'b1 (b2 экзамен 2 марта)', 'B1 немецкий и английский Advance', 'B2 (ждет итог экзамена)', 'b1 (b2 не сдал экзамен)', 'В1 (учится на В2 до авг.', 'В2 - не сдал', 'B1 вроде был (18 лет назад сдавал)', 'b2 ждет серт', 'В1, учится на В2 до няоб 24', 'Б1 ( ждет результат Б2)', 'В1 (учится на В2 уже)', 'В январе - В2 сдает'], value='B1', regex=False)
+Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['b1 (b2 ждет серт)', 'lэкзамен - 6 июля на В1. курсы вечером (но уверенно говорит на B1)','б1', 'b1', 'B1', 'В1','в1','В','Б1','b1+', 'в1-в2','В1-В2','Б1 ( ждет Б2)','ЯЗ: нем В1 был экз 03.05 повтор и сейчас ждет результаты. Технический англ был. А1 сейчас. ОБР: 2 во информационные и комп сети - инженер системоте', 'b1 (B2 ждет серт)', 'b1 (b2 в июле экзамен)', 'B1, сдает B2 в апреле', 'B1 (ждет результаты В2)', 'b1 (b2 15 марта экзамен)', 'Б1 ( ждет итог Б2)', 'Б1 ( проходит Б2)', 'НЯ - В1, АЯ - В1', 'в1-ня , в1-ая', 'B1 (B2 должна до конца февраля получить)', 'b1 (b2 экзамен 6 февраля)', 'В1, может уже В2?', 'Б10Б2', 'Б1?', 'B1 есть, ждем B2 в конце месяца', 'B1-B2', 'Сдавал 8 12 на B1 - ждет результат. 3 01 - аплейт - получил B1!', 'Б1-Б2', 'б1 (до июля на В2)', 'в1, идет на в2', 'b2-c1', 'b1-b2', 'Б1 ( проходит Б2 )', 'b1 (учила, но не сдала В2)', 'в1, еще нет сертификата', 'б1-б2', 'Бй', 'в1 , хочет совмещать с в2', 'в1 (уже сдала В2)', 'B1 (до февраля)', 'B1 (B2 экзамен в январе)', 'В1?', 'b1 (b2 экзамен 2 марта)', 'B1 немецкий и английский Advance', 'B2 (ждет итог экзамена)', 'b1 (b2 не сдал экзамен)', 'В1 (учится на В2 до авг.', 'В2 - не сдал', 'B1 вроде был (18 лет назад сдавал)', 'b2 ждет серт', 'В1, учится на В2 до няоб 24', 'Б1 ( ждет результат Б2)', 'В1 (учится на В2 уже)', 'В январе - В2 сдает'], value='B1', regex=False)
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['Сам оценивает на B2, 13 лет живет в Германии', 'B2' , 'в2',  'b2', 'В2', 'б2', 'Б2', 'Б2 ( учит С1)', 'б2+', 'Б2( 16.02 экзамен С1)', 'b2 (с1 экзамен 16 февраля)', 'в2-с1', 'b2-c2', 'б2 (с1 ждет рез-тат)', 'Б2-С1', 'B2-C2', 'B2+', 'B2 (говорит без проблем - давно здесь)', 'B2+ (не сдавал, но говорит)'],  value='B2', regex=False)
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['C2', 'С2'], value='C2', regex=False)
 Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=['C', 'с1' ,  'С1', 'C1'], value='C1', regex=False)
@@ -42,10 +41,8 @@ Deals1['Level of Deutsch'] = Deals1['Level of Deutsch'].replace(to_replace=[ 0,'
 def encode_categorical(df, column_name, correct_order=None, codes_start=0):
      if correct_order:
          unique_values = correct_order
-    #  else:
-    #      # Если порядок не задан, используем уникальные значения в порядке их появления
-    #      unique_values = sorted(df[column_name].unique())
-    
+     else: unique_values = sorted(df[column_name].unique()) # Если порядок не задан, используем уникальные значения в порядке их появления
+          
      codes = range(codes_start, len(unique_values) + codes_start)
      mapping_dict = dict(zip(unique_values, codes))
      df[f'{column_name}_code'] = df[column_name].map(mapping_dict)
@@ -76,13 +73,6 @@ Quality_mapping = Quality_mapping.drop(columns='Quality')
 
 Quality_mapping.to_excel('Quality_mapping.xlsx', index=False)
 Level_of_Deutsch_mapping.to_excel('Level_of_Deutsch_mapping.xlsx', index=False)
-# Получение распределения уникальных значений в столбце 'Level of Deutsch'
-# value_counts = Deals1['Level of Deutsch Encoded'].value_counts()
-# print("Распределение уникальных значений в столбце 'Level of Deutsch Encoded':")
-# print(value_counts)
-
-# переименование столбца 'Contact Name'в 'CONTACTID', т.к. иx содержание совпадает (см. проверку совпадений в Contacts.ру )
-#Deals1 = Deals1.rename(columns={'Contact Name': 'CONTACT ID'})
 
 
 # '#REF!' напрямую не заменяется; замена '#REF!' на 'WWWWW'
@@ -96,15 +86,11 @@ Deals1 = Deals1[~Deals1.apply(contains_WWWWW, axis=1)]
 
 # Удаление строк с отсутствующими значениями, без контактного лица транзакция не рассматривается
 Deals1 = Deals1.dropna(subset=['Contact Name'])
-#Deals1 = Deals1[Deals1['Created'] <= Deals1['Closing Date']]
-
-
-
 
 #приведение дат в хронологический порядок
 mask = Deals1['Closing Date'] < Deals1['Created']
 Deals1.loc[mask, ['Closing Date', 'Created']] = Deals1.loc[mask, ['Created', 'Closing Date']].values
-#очистка и подготовка данных 
+#очистка данных 
 Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].replace(to_replace=[1, 6, '6',9, '€ 3.500,00', 11000, 11500], value=[100, 600, 600, 900, 3500, 1100, 1150])
 Deals1['Initial Amount Paid'] = Deals1['Initial Amount Paid'].fillna(600)
 Deals1['Months of study'] = Deals1['Months of study'].fillna('UNKNOWN')
@@ -113,17 +99,10 @@ Deals1['Quality'] = Deals1['Quality'].fillna('UNKNOWN')
 
 #удаление даты из будущего
 Deals1['Closing Date'] = pd.to_datetime(Deals1['Closing Date'], format='%d-%m-%Y %H:%M:%S', errors='coerce')
-# Фильтрация строк: оставляем все строки, кроме той, где Closing Date = '25-09-2024 00:00:00'
 Deals1 = Deals1[Deals1['Closing Date'] != pd.Timestamp('2024-09-25 00:00:00')]
-
-
-Deals1 = Deals1.drop(columns=['Unnamed: 16'])
-# Заполнение пропусков в 'Offer Total Amount' в соответствии с значениями в столбце 'Course duration'
-
-# Deals1.loc[(Deals1['Course duration'] == 6) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 1000
-# Deals1.loc[(Deals1['Course duration'] == 11) & (Deals1['Offer Total Amount'].isna()), 'Offer Total Amount'] = 10000
+#замена явной опечатки
 Deals1['Offer Total Amount'] = Deals1['Offer Total Amount'].replace(to_replace=[1], value=1000)
-Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term', 'Lost Reason'])
+Deals1 = Deals1.drop(columns=['Page', 'Campaign', 'Content', 'Term', 'Lost Reason', 'Unnamed: 16'])
 
 Deals1['Initial Amount Paid'] = pd.to_numeric(Deals1['Initial Amount Paid'], errors='coerce')
 Deals1['Offer Total Amount'] = pd.to_numeric(Deals1['Offer Total Amount'], errors='coerce')
@@ -134,19 +113,15 @@ def convert_sla_to_minutes(sla_str):
         return None
     if isinstance(sla_str, float):  # Пропуск значений типа float
         return None
-    # Преобразуем строку в timedelta
+    # Преобразование строки в timedelta
     timedelta_obj = pd.to_timedelta(sla_str)
-    # Рассчитываем количество минут (timedelta.total_seconds() / 60)
+    # Расчет количества минут (timedelta.total_seconds() / 60)
     return int(timedelta_obj.total_seconds() // 60)
 
-# Применяем функцию к столбцу SLA
 Deals1['SLA_minutes'] = Deals1['SLA'].apply(convert_sla_to_minutes)
 Deals1 = Deals1.drop(columns='SLA')
 
 print(Deals1.dtypes)
-
-
-
-#Deals1.to_excel('Deals1.xlsx', index=False)
+Deals1.to_excel('Deals1.xlsx', index=False)
 
 

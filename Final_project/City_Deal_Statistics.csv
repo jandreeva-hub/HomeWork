@@ -1,0 +1,861 @@
+City,total_deals,total_amount
+Aachen,9,71000.0
+Aalen,1,5000.0
+Abensberg,1,11000.0
+Achberg,1,3000.0
+Adelebsen,1,11000.0
+Adelschlag,1,11000.0
+Ahad Al Masarihah,1,4000.0
+Ahaus,1,11000.0
+Ahrensburg,1,11000.0
+Aichach,2,9000.0
+Aichwald,1,5000.0
+Aidlingen,1,11000.0
+Ajman,1,4000.0
+Alamudun,1,3500.0
+Albstadt,1,2500.0
+Aldenhoven,1,5000.0
+Alfeld,2,22000.0
+Allendorf,1,11000.0
+Almaty,1,4000.0
+Alsbach-Hähnlein,1,4000.0
+Alsfeld,1,5000.0
+Altenburg,1,11500.0
+Altenkirchen,1,11000.0
+Altenstadt,2,15000.0
+Altlandsberg,1,11000.0
+Altshausen,1,11500.0
+Altötting,1,3500.0
+Alzenau in Unterfranken,2,22000.0
+Amberg,3,13000.0
+Ampfing,1,11000.0
+Annaberg-Buchholz,1,4000.0
+Ansbach,4,42500.0
+Apen,1,3500.0
+Appen,1,5000.0
+Arnsberg,4,44000.0
+Arnstadt,1,2500.0
+Aschaffenburg,6,66000.0
+Aschersleben,1,11000.0
+Astana,1,2500.0
+Augsburg,12,110000.0
+Aying,1,11000.0
+Babenhausen,1,11000.0
+Backnang,1,5000.0
+Bad Abbach,1,11000.0
+Bad Berleburg,1,5000.0
+Bad Blankenburg,1,11000.0
+Bad Driburg,1,11000.0
+Bad Ems,1,3500.0
+Bad Emstal,1,2500.0
+Bad Essen,1,11000.0
+Bad Feilnbach,1,11000.0
+Bad Friedrichshall,1,4000.0
+Bad Gottleuba-Berggießhübel,1,11000.0
+Bad Hersfeld,1,4500.0
+Bad Hindelang,1,11000.0
+Bad Homburg vor der Höhe,2,15500.0
+Bad Hönningen,1,3500.0
+Bad Nauheim,3,27000.0
+Bad Oeynhausen,3,19000.0
+Bad Pyrmont,2,22000.0
+Bad Saulgau,1,4000.0
+Bad Schwalbach,1,11000.0
+Bad Segeberg,1,11000.0
+Bad Soden am Taunus,1,3500.0
+Bad Tölz,2,16000.0
+Bad Vilbel,1,11000.0
+Bad Wildbad im Schwarzwald,2,15000.0
+Bad Wildungen,1,11000.0
+Bad Windsheim,1,11000.0
+Bad Wörishofen,1,11000.0
+Baden-Baden,2,15000.0
+Baesweiler,1,11000.0
+Baiersbronn,1,11500.0
+Baku,1,2000.0
+Bamberg,2,22500.0
+Bassum,1,3500.0
+Bat yam,1,4000.0
+Bautzen,1,9000.0
+Bayreuth,2,22500.0
+Beckingen,1,11500.0
+Beilstein,1,11000.0
+Belgrade,1,3500.0
+Bergheim,2,13000.0
+Bergisch Gladbach,3,33000.0
+Bergneustadt,1,11000.0
+Berlin,173,1473800.0
+Bernau,2,14500.0
+Beverungen,1,11000.0
+Bialystok,2,8000.0
+Biberach,2,14500.0
+Bielefeld,6,43200.0
+Bingen,2,14000.0
+Binzen,2,16000.0
+Birkenfeld,1,5000.0
+Birstein,1,11000.0
+Bitterfeld-Wolfen,1,4000.0
+Blankenburg,1,4500.0
+Blankenfelde,1,2900.0
+Blumberg,1,11000.0
+Bobingen,1,11000.0
+Bochum,13,118500.0
+Bonn,9,76000.0
+Bopfingen,2,22000.0
+Boppard,2,8000.0
+Borken,2,13500.0
+Borna,1,11000.0
+Brake,1,11000.0
+Brakel,1,11000.0
+Brandenburg an der Havel,2,22000.0
+Braubach,1,11000.0
+Braunfels,1,11000.0
+Braunschweig,10,84000.0
+Bremen,15,149000.0
+Bremerhaven,1,11000.0
+Bretten,1,11000.0
+Bruchköbel,1,11000.0
+Bruck,1,5000.0
+Brühl,1,5000.0
+Buchholz,2,22000.0
+Burbach,1,4000.0
+Burg,2,16000.0
+Burghausen,2,9500.0
+Buttstädt,1,11000.0
+Buxtehude,1,11000.0
+Bärnau,1,9000.0
+Böblingen,2,22000.0
+Böhlen,1,5000.0
+Büchen,2,22000.0
+Bühl,2,22000.0
+Bünde,3,33000.0
+Büren,2,20000.0
+Bürstadt,1,11000.0
+Castrop-Rauxel,1,11000.0
+Causeni,1,3500.0
+Celle,2,9500.0
+Cham,2,16000.0
+Chambon-sur-Lignon,1,4000.0
+Chemnitz,10,87500.0
+Cheremkhovo,1,4000.0
+Chuguev,1,4000.0
+Cloppenburg,2,8000.0
+Coburg,4,23000.0
+Coesfeld,2,20000.0
+Coswig,1,3000.0
+Crailsheim,1,9000.0
+Cremlingen,1,11000.0
+Cuxhaven,1,9000.0
+Dabrowa Gornicza,2,8000.0
+Darmstadt,6,52000.0
+Deggendorf,1,11500.0
+Delbrück,1,3500.0
+Delitzsch,2,6000.0
+Delmenhorst,1,4000.0
+Detmold,3,26000.0
+Dettelbach,1,3500.0
+Dettenhausen,1,5000.0
+Diez,4,42000.0
+Dillenburg,1,11000.0
+Dingolfing,1,11000.0
+Dinkelscherben,1,11000.0
+Dinslaken,1,11000.0
+Ditzingen,1,9000.0
+Donaueschingen,1,11000.0
+Donauwörth,2,22500.0
+Dormagen,1,11500.0
+Dortmund,25,228500.0
+Dresden,26,262000.0
+Dubai,1,4000.0
+Duderstadt,1,11000.0
+Duisburg,18,188000.0
+Duschanbe,1,4000.0
+Dußlingen,1,4000.0
+Dörverden,1,4000.0
+Düren,7,41000.0
+Düsseldorf,31,284500.0
+Eberbach,1,11000.0
+Ebern,1,11000.0
+Eching,1,11000.0
+Edingen-Neckarhausen,1,11000.0
+Eggenfelden,1,9000.0
+Eggenstein-Leopoldshafen,1,2000.0
+Eggolsheim,2,14500.0
+Ehrensberg,1,9000.0
+Einhausen,1,11000.0
+Eisenbach (Hochschwarzwald),1,0.0
+Eisenberg,1,4500.0
+Eiterfeld,1,11000.0
+Elze,1,11000.0
+Emden,1,11000.0
+Emsdetten,1,5000.0
+Engelsbrand,1,11000.0
+Engen,2,22000.0
+Eppelborn,3,27000.0
+Eppelheim,1,11000.0
+Erbach,1,9000.0
+Erding,1,11000.0
+Erftstadt,1,11000.0
+Erfurt,7,57500.0
+Erkelenz,1,11000.0
+Erkner,1,4000.0
+Erkrath,3,21000.0
+Erlangen,2,14000.0
+Erlensee,1,11000.0
+Eschenburg,1,4500.0
+Espenau,1,11000.0
+Essen,16,145500.0
+Essing,2,9000.0
+Esslingen am Neckar,1,5000.0
+Euerbach,1,11000.0
+Euskirchen,2,8000.0
+Eystrup,1,5000.0
+Fernwald,1,11000.0
+Filderstadt,2,22000.0
+Finnentrop,1,3500.0
+Flensburg,4,44000.0
+Floß,1,5000.0
+Forchheim,5,55500.0
+Forst,2,15000.0
+Frammersbach,1,9000.0
+Frankfurt,25,210000.0
+Frechen,3,31000.0
+Freiburg,9,94000.0
+Freigericht,1,11000.0
+Freising,2,15000.0
+Freital,3,19500.0
+Freren,2,22000.0
+Freudenstadt,3,22000.0
+Friedberg,3,27500.0
+Friedenweiler,1,11000.0
+Friedrichsdorf,2,22000.0
+Friedrichshafen,4,30500.0
+Friesoythe,3,11500.0
+Fritzlar,1,5000.0
+Fröndenberg,1,4000.0
+Fulda,3,12000.0
+Fürstenfeldbruck,2,22500.0
+Fürth,6,42500.0
+Gaildorf,1,11000.0
+Ganderkesee,1,11000.0
+Garbsen,2,15000.0
+Garmisch-Partenkirchen,1,11000.0
+Garrel,1,2000.0
+Gdańsk,1,2000.0
+Gdynia,1,3500.0
+Geilenkirchen,1,9000.0
+Geldern,1,11000.0
+Gelnhausen,1,11000.0
+Gelsenkirchen,3,27000.0
+Gera,5,46000.0
+Gerlingen,1,11000.0
+Germering,2,22000.0
+Germersheim,1,5000.0
+Gerolstein,1,2000.0
+Geyer,1,5000.0
+Gießen,5,46000.0
+Gladenbach,3,27000.0
+Glandorf,1,11000.0
+Glendale,1,2500.0
+Gommern,1,11000.0
+Grafenau,1,2500.0
+Grafenhausen,1,11000.0
+Greven,1,11500.0
+Grevenbroich,1,4000.0
+Grevesmühlen,1,11000.0
+Griepswohld,1,11000.0
+Großbreitenbach,1,11000.0
+Großrosseln,1,5000.0
+Gröbenzell,1,11000.0
+Gröditz,1,11000.0
+Gummersbach,1,0.0
+Göppingen,1,11000.0
+Görlitz,3,33000.0
+Göttingen,2,16000.0
+Güglingen,1,5000.0
+Günzburg,1,4000.0
+Güstrow,1,5000.0
+Gütersloh,2,14500.0
+Hachenburg,1,11000.0
+Hagen,6,55000.0
+Hagenow,2,22000.0
+Haimhausen,1,5000.0
+Haldensleben,3,33500.0
+Hallbergmoos,1,4000.0
+Halle,7,54500.0
+Halle (Saale),1,11000.0
+Hamburg,60,502900.0
+Hameln,1,11000.0
+Hamm,2,14500.0
+Hannover,19,174000.0
+Harsewinkel,1,11000.0
+Hartmannsdorf,1,11000.0
+Hasbergen,1,2500.0
+Haselünne,1,4000.0
+Hattgenstein,1,5000.0
+Hechingen,1,11000.0
+Heide,1,11000.0
+Heidelberg,3,27000.0
+Heidenheim,3,34000.0
+Heilbronn,5,41000.0
+Heiligenhaus,1,11000.0
+Heimbach,1,4000.0
+Heimbuchenthal,1,2500.0
+Heinersreuth,1,1000.0
+Heinsberg,2,13000.0
+Helmstedt,2,15500.0
+Helmstidde,2,16000.0
+Hennef,2,22000.0
+Hennigsdorf,1,3500.0
+Henstedt-Ulzburg,1,11000.0
+Heppenheim,1,11000.0
+Herbrechtingen,1,2500.0
+Herdecke,1,11000.0
+Herford,3,33000.0
+Herne,4,30000.0
+Herrsching am Ammersee,1,5000.0
+Herzberg,2,22000.0
+Herzogenaurach,1,2000.0
+Herzogenrath,1,11000.0
+Hettenshausen,1,11000.0
+Heusweiler,1,11000.0
+Hilchenbach,1,2500.0
+Hildesheim,5,40000.0
+Hockenheim,1,11000.0
+Hof,1,11000.0
+Hofheim am Taunus,1,11000.0
+Hofkirchen,1,2500.0
+Hohenberg an der Eger,1,4000.0
+Hohenstein,1,4500.0
+Holzminden,2,22000.0
+Holzwickede,1,4000.0
+Homburg,2,22000.0
+Hopfen am See,1,4000.0
+Hoyerswerda,1,11000.0
+Höhenkirchen-Siegertsbrunn,1,11000.0
+Hörstel,2,10000.0
+Hösbach,1,11000.0
+Hückelhoven,2,13000.0
+Hückeswagen,1,11000.0
+Hüttisheim,1,11000.0
+Igalo,1,4000.0
+Illingen,2,22000.0
+Ilmenau,1,11000.0
+Imsbach,1,11000.0
+Inchenhofen,1,11000.0
+Ingolstadt,3,19500.0
+Iserlohn,2,20500.0
+Isernhagen,2,15000.0
+Itzehoe,2,22000.0
+Jena,4,44500.0
+Jindrichuv Hradec,1,4500.0
+Jördenstorf,1,11500.0
+Jünkerath,1,4500.0
+Kaiserslautern,3,24500.0
+Kalanchak,1,4000.0
+Kaliningrad,1,2000.0
+Kalkar,2,15000.0
+Kaltenkirchen,1,4000.0
+Kamen,1,11000.0
+Kamenskoe,1,2000.0
+Kappelrodeck,1,11000.0
+Karben,1,4000.0
+"Karl-Liebknecht str. 24, Hildburghausen, Thüringen",2,22000.0
+Karlsfeld,2,11900.0
+Karlsruhe,16,160000.0
+Karstädt,1,2500.0
+Kassel,8,73000.0
+Kaufbeuren,1,4000.0
+Kehl,3,20000.0
+Kelkheim,1,11000.0
+Kemnath,1,11000.0
+Kempten,1,2500.0
+Kernen im Remstal,1,11000.0
+Kerpen,1,11000.0
+Kharkiv,1,3500.0
+Kiel,4,44000.0
+Kirchheim,1,4000.0
+Kirchheim bei München,1,11000.0
+Kirchlauter,1,5000.0
+Kirchlengern,1,11000.0
+Kirchlinteln,1,5000.0
+Kirn,1,4500.0
+Kisslegg,1,11000.0
+Kitzingen,1,11000.0
+Klasztorna,1,2000.0
+Kleinostheim,1,11000.0
+Kleve,1,11000.0
+Klosterlechfeld,1,3500.0
+Kluse,1,11000.0
+Koblenz,9,93000.0
+Kobyłka,1,3500.0
+Kolbermoor,1,11000.0
+Konstanz,5,36000.0
+Konz,1,11000.0
+Korbach,1,11000.0
+Kornwestheim,2,22000.0
+Korschenbroich,2,22000.0
+Kraichtal,2,22000.0
+Krefeld,4,34000.0
+Kressbronn am Bodensee,1,11000.0
+Krumbach,1,9000.0
+Kulmbach,1,11000.0
+Kusel,1,11000.0
+Köln,23,208700.0
+Königslutter,1,11000.0
+Königsmoos,1,5000.0
+Königstein im Taunus,1,11000.0
+Königswinter,1,9000.0
+Ladenburg,1,11000.0
+Lage,1,11500.0
+Lahnstein,2,22000.0
+Lampertheim,1,11000.0
+Landau an der Isar,1,11000.0
+Landau in der Pfalz,2,22000.0
+Landsberg am Lech,1,11000.0
+Landshut,3,20500.0
+Langenbach,1,11000.0
+Langenselbold,1,5000.0
+Laubach,1,9000.0
+Lauf,1,11000.0
+Lauf an der Pegnitz,1,5000.0
+Lauter-Bernsbach,1,4500.0
+Leer,1,11000.0
+Lehre,1,4000.0
+Leichlingen,2,14500.0
+Leinfelden-Echterdingen,2,22000.0
+Leingarten,1,11000.0
+Leipzig,44,415500.0
+Lemgo,2,9000.0
+Lengenfeld,1,11000.0
+Lengerich,1,2500.0
+Lennestadt,1,11000.0
+Lenningen,1,11000.0
+Leonberg,3,26000.0
+Leopoldshöhe,1,11000.0
+Leuna,1,11000.0
+Leutershausen,1,4500.0
+Leutkirch im Allgäu,1,11000.0
+Leverkusen,1,2500.0
+Lichtenfels,1,11000.0
+Liederbach am Taunus,1,4000.0
+Lierschied,1,11000.0
+Limbach-Oberfrohna,1,5000.0
+Limeshain,1,11000.0
+Lindau (Bodensee),1,11000.0
+Lingen,3,19000.0
+Linz,1,4000.0
+Lippstadt,2,6500.0
+Litzendorf,1,4000.0
+London,1,4000.0
+Lotte,1,11000.0
+Luckenwalde,2,22000.0
+Ludwigsburg,6,58500.0
+Lutherstadt Eisleben,1,2500.0
+Lutherstadt Wittenberg,6,60000.0
+Lychen,1,2500.0
+Löbau,1,11000.0
+Löningen,1,11000.0
+Lörrach,1,2500.0
+Lübeck,7,62000.0
+Lüchow,1,11000.0
+Lüneburg,1,4500.0
+Lünen,2,20000.0
+Maasbree,1,4000.0
+Magdeburg,6,52500.0
+Mahlberg,1,11000.0
+Maikammer,1,0.0
+Mainaschaff,1,11500.0
+Mainbernheim,1,11500.0
+Mainz,7,75000.0
+Mainz-Kastel,1,11000.0
+Mainz-Kostheim,1,11500.0
+Malchin,1,11000.0
+Malschwitz,1,3500.0
+Manching,1,11000.0
+Mandelbachtal,1,4000.0
+Mannheim,10,104500.0
+Markdorf,3,31500.0
+Markgröningen,2,5000.0
+Marktredwitz,1,11000.0
+Marne,1,11000.0
+Marsberg,1,11000.0
+Massenbachhausen,1,3000.0
+Meerbusch,2,22500.0
+Meinersen,1,11000.0
+Meinerzhagen,1,11000.0
+Meißenheim,1,2500.0
+Melle,1,3500.0
+Melsungen,1,11000.0
+Menden,5,48000.0
+Mengerskirchen,1,3000.0
+Merseburg,2,22000.0
+Mettmann,2,22000.0
+Michelfeld,2,14000.0
+Michelstadt,1,11000.0
+Miesbach,1,11000.0
+Miltenberg,1,11000.0
+Minden,3,13000.0
+Minsk,1,4000.0
+Mittweida,1,11000.0
+Molsberg,1,11000.0
+Monheim am Rhein,2,22000.0
+Monschau,1,11000.0
+Montabaur,1,11500.0
+Morsbach,1,5000.0
+Moscow,3,6500.0
+Murom,1,4000.0
+Murr,1,4500.0
+Mutlangen,1,0.0
+Mömlingen,1,11000.0
+Mönchengladbach,12,101000.0
+Mühldorf,1,3500.0
+Mühlhausen,2,22000.0
+Mülheim an der Ruhr,6,53000.0
+Mülheim-Kärlich,1,11000.0
+Müllrose,2,22000.0
+München,72,600000.0
+Münchhausen,1,4000.0
+Münster,6,46200.0
+Nagold,1,11000.0
+Namur,1,4000.0
+Nastätten,1,5000.0
+Naumburg,4,31000.0
+Nebra (Unstrut),1,11000.0
+Nellingen,1,11000.0
+Nesselwang,2,15000.0
+Netphen,1,3500.0
+Nettetal,1,5000.0
+Neu Wulmstorf,1,5000.0
+Neu-Isenburg,1,9000.0
+Neu-Ulm,5,39500.0
+Neubrandenburg,2,5500.0
+Neuburg,1,11000.0
+Neuenkirchen,1,4000.0
+Neuenrade,1,2500.0
+Neuhemsbach,1,4000.0
+Neuhäusel,1,11000.0
+Neukirchen-Vluyn,3,26000.0
+Neumünster,1,11000.0
+Neunkirchen,1,5000.0
+Neunkirchen-Seelscheid,1,11000.0
+Neuss,3,17000.0
+Neustadt-Glewe,1,11000.0
+Neusäß,1,11000.0
+Neutraubling,1,4000.0
+Neuwied,1,11000.0
+Niedenstein,1,5000.0
+Niedereschach,1,11000.0
+Niederorschel,1,11000.0
+Niederstetten,1,9000.0
+Niederstotzingen,1,11000.0
+Nienburg/Weser,3,26500.0
+Niesky,1,11000.0
+Nisterberg,1,5000.0
+Nizhny Novgorod,1,2000.0
+Norden,1,11000.0
+Nordenham,1,11000.0
+Norderney,1,11000.0
+Nordhausen,1,11000.0
+Northeim,1,11000.0
+Nottuln,1,11000.0
+Novi Sad,1,3500.0
+Novorossiysk,1,3500.0
+Nünchritz,1,11000.0
+Nürnberg,42,381400.0
+Nürtingen,1,11000.0
+Oberasbach,1,11000.0
+Oberding,1,11000.0
+Obergriesbach,1,11000.0
+Obergünzburg,1,11000.0
+Oberhausen,9,85000.0
+Oberkochen,1,11000.0
+Obermarchtal,1,5000.0
+Oberndorf am Neckar,2,22000.0
+Obernheim,1,4500.0
+Oberrot,1,4000.0
+Ochtrup,2,20500.0
+Odelzhausen,1,11000.0
+Oelde,1,11000.0
+Oerlinghausen,1,11000.0
+Offenbach,2,14500.0
+Offenbach am Main,1,11000.0
+Ohrdruf,1,11000.0
+Olching,1,3500.0
+Oldenburg,6,58000.0
+Olpe,1,5000.0
+Oranienburg,3,31000.0
+Osnabrück,6,57500.0
+Ostbevern,2,15000.0
+Osterhofen,1,11000.0
+Osterode am Harz,1,11000.0
+Ottersweier,1,11000.0
+Ottobrunn,1,11000.0
+Paderborn,5,55500.0
+Parchim,1,4000.0
+Passau,9,81500.0
+Pavlograd,1,4000.0
+Peine,1,11500.0
+Perleberg,1,11000.0
+Pfaffenhofen,1,5000.0
+Pfalzgrafenweiler,1,3000.0
+Pfedelbach,4,29500.0
+Pfinztal,1,11000.0
+Pforzheim,4,25500.0
+Phuket,1,2000.0
+Piatek,1,2500.0
+Pinneberg,1,11000.0
+Piotrków Trybunalski,1,4000.0
+Pirmasens,2,15500.0
+Planegg,1,11000.0
+Plauen,1,11000.0
+Pleinfeld,1,5000.0
+Plön,1,11000.0
+Podskalie,1,4500.0
+Poing,1,11000.0
+"Poland , Gdansk , Al. Grunwaldzka 7, ap. 1a",1,0.0
+Pommelsbrunn,2,22000.0
+Poppenhausen,1,2500.0
+Porta Westfalica,1,11000.0
+Postbauer-Heng,1,5000.0
+Potsdam,6,40500.0
+Prenzlau,1,11000.0
+Prostejov,1,3500.0
+Przesław,1,3500.0
+Pullach im Isartal,1,11000.0
+Pyrbaum,1,11000.0
+Pößneck,1,11000.0
+Quedlinburg,2,16000.0
+Quickborn,1,11000.0
+Radebeul,1,4500.0
+Randersacker,2,13000.0
+Rangsdorf,1,4000.0
+Raschau-Markersbach,1,11000.0
+Rastatt,2,12000.0
+Rathenow,2,22000.0
+Ravensburg,2,22000.0
+Rechitsa,1,4500.0
+Recklinghausen,1,11000.0
+Rees,1,11000.0
+Regensburg,10,84500.0
+Reichenau,1,5000.0
+Reichenbach,2,14000.0
+Remchingen,1,5000.0
+Remscheid,2,22000.0
+Rendsburg,1,11000.0
+Retzstadt,1,11000.0
+Reutlingen,4,29000.0
+Rheda-Wiedenbrück,1,5000.0
+Rheine,2,13900.0
+Riedstadt,1,11000.0
+Riesa,1,11500.0
+Riga,1,3500.0
+Rinteln,1,11000.0
+Rodewisch,1,2000.0
+Rohrdorf,2,6500.0
+Rommerskirchen,1,11500.0
+Rosbach vor der Höhe,1,11000.0
+Rosengarten,1,5000.0
+Rosenheim,1,9000.0
+Rostock,12,110000.0
+Rotenburg an der Fulda,1,11000.0
+Rothenburg ob der Tauber,1,11000.0
+Rotterdam,1,4000.0
+Rudolstadt,1,5000.0
+Ruhla,1,11000.0
+Runkel,1,11000.0
+Rust,1,3500.0
+Rötgesbüttel,1,9000.0
+Röttingen,1,11000.0
+Rüdesheim am Rhein,1,11000.0
+Saalfeld,1,11000.0
+Saarbrücken,8,75000.0
+Saarlouis,2,14500.0
+Saint Petersburg,1,2500.0
+Salzgitter,1,11000.0
+Salzwedel,1,11000.0
+Sand am Main,1,11000.0
+Sandersdorf,1,11000.0
+Sankt Augustin,1,11000.0
+Sankt Georgen im Schwarzwald,3,23200.0
+Sankt Ingbert,1,11000.0
+Sankt Leon-Rot,1,9000.0
+Sasbach,1,4000.0
+Scharbeutz,1,11000.0
+Schenefeld,1,4000.0
+Schieder-Schwalenberg,2,22000.0
+Schkeuditz,1,11000.0
+Schlangen,1,11000.0
+Schliersee,1,11000.0
+Schmallenberg,1,11000.0
+Schmölln,1,4000.0
+Schonach im Schwarzwald,1,11000.0
+Schrozberg,1,5000.0
+Schwaig,1,11000.0
+Schwalbach,2,22000.0
+Schwandorf,6,59000.0
+Schwanewede,1,3000.0
+Schwarzenberg,1,9000.0
+Schwarzheide,1,11000.0
+Schweinfurt,4,22500.0
+Schwepnitz,1,3500.0
+Schwerin,4,44000.0
+Schwäbisch Gmünd,1,5000.0
+Schwäbisch Hall,3,9500.0
+Schönwald,1,2500.0
+Seesen,1,11000.0
+Seevetal,3,21500.0
+Selm,1,11000.0
+Semej,1,3000.0
+Senden,1,11000.0
+Senftenberg,1,11000.0
+Sexau,1,11000.0
+Siegburg,2,22500.0
+Siegen,5,49000.0
+Sigmarszell,1,11000.0
+Sindelfingen,2,14500.0
+Singen,1,9000.0
+Solingen,1,9000.0
+Sollstedt,1,4000.0
+Sonneberg,1,11000.0
+Speichersdorf,1,11000.0
+Speyer,3,23200.0
+Stade,1,11500.0
+Stadecken-Elsheim,1,11000.0
+Starnberg,1,3500.0
+Staufen im Breisgau,1,11000.0
+Stein,1,11000.0
+Steinau an der Straße,1,11000.0
+Steinbach,1,11000.0
+Steinfurt,1,11000.0
+Stelle,1,11000.0
+Stendal,1,11000.0
+Stolberg,2,16000.0
+Stralsund,4,44000.0
+Straubing,1,11000.0
+Stuhr,1,11500.0
+Stuttgart,20,184500.0
+Sulzbach,1,11000.0
+Sundern,1,11000.0
+Szczecin,1,3500.0
+Südlohn,1,11000.0
+Süßen,1,9000.0
+Słubice,1,3000.0
+Słupsk,1,2500.0
+Taraz,1,2500.0
+Tashkent,2,8500.0
+Tatabanya,2,4000.0
+Tengen,1,3500.0
+Teterow,1,11000.0
+Tettnang,1,3500.0
+Teublitz,2,22000.0
+Thalmassing,1,3500.0
+Theres,1,9000.0
+Tittmoning,1,4000.0
+Torgau,1,4000.0
+Trebgast,1,11000.0
+Triberg,2,4000.0
+Trier,8,73000.0
+Troisdorf,4,35000.0
+Trossingen,1,5000.0
+Tuttlingen,2,15000.0
+Tutzing,1,11000.0
+Twistringen,1,9000.0
+Tönning,1,4500.0
+Tübingen,2,22500.0
+Uhldingen-Mühlhofen,1,11000.0
+Ulm,6,52000.0
+Unterhaching,3,27000.0
+Unterschneidheim,1,11000.0
+Untersiemau,1,11000.0
+Urbach,1,4000.0
+Usingen,1,11000.0
+Vaihingen an der Enz,1,11000.0
+Vechta,2,16000.0
+Velden,1,11000.0
+Veldenz,1,3000.0
+Vellberg,1,4000.0
+Verden,1,11000.0
+Verl,1,9000.0
+Vierden,1,11000.0
+Viereth-Trunstadt,1,11000.0
+Viernheim,2,22000.0
+Villingen-Schwenningen,10,78000.0
+Villingen‑Schwenningen,1,11000.0
+Voerde,1,11000.0
+Volgodonsk,1,4000.0
+"Vor Ebersbach 1, 77761 Schiltach",1,11000.0
+Wadgassen,1,11000.0
+Waiblingen,1,5000.0
+Waldbronn,2,20000.0
+Waldenburg,1,11000.0
+Waldkirch,1,3500.0
+Waldkraiburg,1,11500.0
+Walldorf,2,13500.0
+Wandlitz,1,11000.0
+Wangen im Allgäu,2,13900.0
+Warburg,1,11000.0
+Waren,1,11000.0
+Warendorf,1,3500.0
+Warszawa,4,12000.0
+Weiden,1,11000.0
+Weil am Rhein,2,22000.0
+Weilburg,3,31000.0
+Weilheim,1,11000.0
+Weilheim in Oberbayern,2,22000.0
+Weimar,2,13500.0
+Weingarten,1,11000.0
+Weinsberg,1,11000.0
+Weinstadt,3,21000.0
+Weinähr,1,11000.0
+Weiterstadt,3,25500.0
+Weißenburg in Bayern,1,11000.0
+Weißwasser,2,13900.0
+Wenden,1,4000.0
+Wenzenbach,1,9000.0
+Werder,1,9000.0
+Werl,1,11000.0
+Werlte,1,2000.0
+Wermelskirchen,1,2000.0
+Werne,1,11500.0
+Wertheim,1,11000.0
+Wesel,3,33000.0
+Wetter,1,11000.0
+Wetzlar,1,1000.0
+Wiefelstede,1,5000.0
+Wien,12,40400.0
+Wiesbaden,3,33500.0
+Wiesenttal,1,9000.0
+Wilhelmshaven,1,11000.0
+Willich,2,22000.0
+Winhöring,1,11500.0
+Wirges,1,11000.0
+Wismar,1,3000.0
+Witten,3,33000.0
+Wittendörp,1,2500.0
+Wittmund,1,3500.0
+Wittstock,1,11000.0
+Witzeeze,1,11000.0
+Wolfenbüttel,2,22000.0
+Wolfhagen,2,22000.0
+Wolfsburg,7,65000.0
+Wolnzach,1,4000.0
+Worms,3,16000.0
+Wuppertal,4,31000.0
+Wächtersbach,3,19000.0
+Wörthsee,1,5000.0
+Wülfrath,1,11000.0
+Würzburg,6,52000.0
+Włodawa,1,4000.0
+Zeitz,5,26900.0
+Zella-Mehlis,1,11000.0
+Zerbst,1,5000.0
+Zetel,1,11000.0
+Zinnowitz,1,4500.0
+Zoetermeer,1,2500.0
+Zorneding,1,11000.0
+Zwickau,3,23500.0
+Zwingenberg,1,11000.0
+Öhringen,1,11000.0
+Übelbach,1,4500.0
+Śrem,1,4500.0

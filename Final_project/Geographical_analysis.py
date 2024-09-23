@@ -1,130 +1,112 @@
 #Географический анализ
-import numpy as np
+
 import pandas as pd
+import folium
+from geopy.geocoders import Nominatim
+import time
 import matplotlib.pyplot as plt
 import seaborn as sns
-import matplotlib.dates as mdates
-
 
 
 Deals1 = pd.read_excel('Deals1.xlsx')
-Calls = pd.read_excel('Calls (Done) (1).xlsx')
-Spend = pd.read_excel('Spend (Done) (2).xlsx')
+Level_of_Deutsch_mapping = pd.read_excel('Level_of_Deutsch_mapping.xlsx') 
 
+# filtered_deals = Deals1[(Deals1['Stage'] == 'Payment Done') & (Deals1['City'] != 'UNKNOWN')]
 
-# # Initialize geolocator
+# # Подсчет количества сделок и определение уровня владения языком для каждого города
+# grouped_deals = filtered_deals.groupby(['City', 'Level of Deutsch']).agg(
+#     total_deals=('Id', 'count')
+# ).reset_index()
+
+# # получение координат городов
 # geolocator = Nominatim(user_agent="geoapiExercises")
 
-# # Get the geographical coordinates for each city
 # def get_coordinates(city):
 #     try:
 #         location = geolocator.geocode(city)
-#         return location.latitude, location.longitude
-#     except:
-#         return None, None
+#         time.sleep(1)
+#         if location:
+#             return (location.latitude, location.longitude)
+#         else:
+#             print(f"Координаты не найдены для города: {city}")
+#             return None
+#     except Exception as e:
+#         print(f"Ошибка для города {city}: {e}")
+#         return None
 
-# # Group by city to calculate the total deals and successful deals
-# city_analysis = deals_df.groupby('City').agg({
-#     'Id': 'count',  # Total deals
-#     'Stage': lambda x: (x == 'Payment Done').sum()  # Successful deals
-# }).reset_index()
+# # функция для получения координат
+# grouped_deals['coordinates'] = grouped_deals['City'].apply(get_coordinates)
 
-# # Calculate success rate for each city
-# city_analysis.rename(columns={'Id': 'Total Deals', 'Stage': 'Successful Deals'}, inplace=True)
-# city_analysis['Success Rate'] = city_analysis['Successful Deals'] / city_analysis['Total Deals']
+# # Удаление строк с отсутствующими координатами
+# grouped_deals = grouped_deals.dropna(subset=['coordinates'])
 
-# # Apply this function to the cities to get coordinates
-# city_analysis['Latitude'] = city_analysis['City'].apply(lambda x: get_coordinates(x)[0])
-# city_analysis['Longitude'] = city_analysis['City'].apply(lambda x: get_coordinates(x)[1])
+# # Создание карты
+# m = folium.Map(location=[51.1657, 10.4515], zoom_start=6)
 
-# # Remove cities where coordinates could not be found
-# city_analysis.dropna(subset=['Latitude', 'Longitude'], inplace=True)
+# # Определение цветовой схемы на основе уровня владения языком
+# color_map = {1: "green", 2: "yellow", 3: "orange", 4: "red", 5: "darkred", 6: "purple"}
 
-# # Create a base map
-# map_ = folium.Map(location=[51.1657, 10.4515], zoom_start=6)  # Centered around Germany
+# # Добавление маркеров на карту
+# for index, row in grouped_deals.iterrows():
+#     level = row['Level of Deutsch']
+#     color = color_map.get(level, 'blue')  # Если уровень языка не найден, используем синий цвет
+#     total_deals = row['total_deals']  # Количество сделок
 
-# # Plot each city with bubbles sized by total deals
-# for _, row in city_analysis.iterrows():
+#     # содержимое всплывающего окна
+#     popup_content = f"<b>City:</b> {row['City']}<br><b>Deals:</b> {total_deals}<br><b>Level:</b> {level}"
+    
+#     # popup для карты
+#     popup = folium.Popup(html=popup_content, max_width=250)
+
+#     # с popup и tooltip
 #     folium.CircleMarker(
-#         location=(row['Latitude'], row['Longitude']),
-#         radius=row['Total Deals'] * 0.5,  # Adjust size for better visualization
-#         color='blue',
+#         location=row['coordinates'],
+#         radius=5 + total_deals / 10,  # Радиус маркера на основе числа сделок
+#         popup=popup,
+#         tooltip=f"City: {row['City']} - Deals: {total_deals}, Level: {level}",
+#         color=color,
 #         fill=True,
-#         fill_color='blue',
-#         fill_opacity=0.6,
-#         popup=(f"City: {row['City']}<br>Total Deals: {row['Total Deals']}<br>Success Rate: {row['Success Rate']:.2f}")
-#     ).add_to(map_)
-
-# # Save to an HTML file and display the map
-# map_.save("deals_bubble_map.html")
+#         fill_color=color
+#     ).add_to(m)
 
 
-# from folium.plugins import HeatMap
+# file_path = "C:/Users/jandr/Documents/ICH/Python for data analysis/HomeWork/Final_project/germany_map.html"
+# m.save(file_path)
+# print(f"Карта создана и сохранена по пути: {file_path}")
 
-# # Create a base map
-# heatmap = folium.Map(location=[51.1657, 10.4515], zoom_start=6)  # Centered around Germany
+# Фильтрация сделок, где этап 'Payment Done', город 'UNKNOWN'
+filtered_deals = Deals1[(Deals1['Stage'] == 'Payment Done') & (Deals1['City'] != 'UNKNOWN')]
 
-# # Create a list of coordinates for the heatmap
-# heat_data = [[row['Latitude'], row['Longitude'], row['Total Deals']] for index, row in city_analysis.iterrows()]
+# Подсчет общего количества сделок по городам и уровням владения немецким языком
+city_language_deals = filtered_deals.groupby(['City', 'Level of Deutsch']).agg(
+    total_deals=('Id', 'count')  # 'Id' используется для подсчета количества сделок
+).reset_index()
 
-# # Add heatmap layer
-# HeatMap(heat_data, radius=15).add_to(heatmap)
+# Сортировка по количеству сделок и выбор топ-10 городов
+top_10_cities = city_language_deals.groupby('City').agg(
+    total_deals=('total_deals', 'sum')
+).reset_index().sort_values(by='total_deals', ascending=False).head(10)
 
-# # Save to an HTML file and display the map
-# heatmap.save("deals_heatmap.html")
+# Объединение данных для топ-10 городов с уровнями владения языком
+top_10_data = city_language_deals[city_language_deals['City'].isin(top_10_cities['City'])]
 
+# Сортировка данных по убыванию количества сделок в каждой группе по городу
+top_10_data['City'] = pd.Categorical(top_10_data['City'], categories=top_10_cities['City'], ordered=True)
+top_10_data = top_10_data.sort_values(by=['City', 'total_deals'], ascending=[True, False])
 
+# Построение гистограммы
+plt.figure(figsize=(12, 6))
+sns.barplot(x='City', y='total_deals', hue='Level of Deutsch', data=top_10_data, palette='Set2')
 
-
-# # Plotting the number of deals by city
-# fig, ax1 = plt.subplots(figsize=(12, 6))
-# ax1.bar(Deals1['City'], Deals1['Total Deals'], color='skyblue', label='Total Deals')
-# ax1.set_xlabel('City')
-# ax1.set_ylabel('Total Deals')
-# ax1.set_title('Number of Deals by City')
-# plt.xticks(rotation=45)
-# plt.show()
-
-# # Plotting the success rate by city
-# fig, ax2 = plt.subplots(figsize=(12, 6))
-# ax2.bar(Deals1['City'], Deals1['Success Rate'], color='green', label='Success Rate')
-# ax2.set_xlabel('City')
-# ax2.set_ylabel('Success Rate')
-# ax2.set_title('Success Rate by City')
-# plt.xticks(rotation=45)
-# plt.show()
-
-
-
-# Group by city to calculate the total deals and successful deals
-city_analysis = Deals1.groupby('City').agg({
-    'Id': 'count',  # Total deals
-    'Stage': lambda x: (x == 'Payment Done').sum()  # Successful deals
-}).reset_index()
-
-# Calculate success rate for each city
-city_analysis.rename(columns={'Id': 'Total Deals', 'Stage': 'Successful Deals'}, inplace=True)
-city_analysis['Success Rate'] = city_analysis['Successful Deals'] / city_analysis['Total Deals']
-
-# Sort cities by the total number of deals for better visualization
-city_analysis.sort_values(by='Total Deals', ascending=False, inplace=True)
-
-# Plotting the number of deals by city
-fig, ax1 = plt.subplots(figsize=(12, 6))
-ax1.bar(city_analysis['City'], city_analysis['Total Deals'], color='skyblue', label='Total Deals')
-ax1.set_xlabel('City')
-ax1.set_ylabel('Total Deals')
-ax1.set_title('Number of Deals by City')
+plt.title('Распределение сделок по городам (Топ-10) с уровнями владения немецким языком')
+plt.xlabel('Города')
+plt.ylabel('Количество сделок')
 plt.xticks(rotation=45)
-plt.show()
+plt.legend(title='Уровень владения немецким языком')
 
-# Plotting the success rate by city
-fig, ax2 = plt.subplots(figsize=(12, 6))
-ax2.bar(city_analysis['City'], city_analysis['Success Rate'], color='green', label='Success Rate')
-ax2.set_xlabel('City')
-ax2.set_ylabel('Success Rate')
-ax2.set_title('Success Rate by City')
-plt.xticks(rotation=45)
+# Сохранение графика
+plt.tight_layout()
+plt.savefig("top_10_city_deals_sorted.png")
 plt.show()
 
 

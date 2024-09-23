@@ -22,19 +22,11 @@ print(Spend.dtypes)
 # Spend['Date'] = Spend['Date'].dt.date
 # Spend.drop(columns=['Date'], inplace=True)
 
-
-#Spend_group = Spend.groupby('Source')['Campaign'].nunique()
-
-#print(Spend_group)
-
-#Spend = pd.DataFrame(Spend)
-
 # Список значений, для которых нужно заполнить 'Campaign'
 sources_to_update = ['Bloggers', 'CRM', 'Offline', 'Organic', 'Partnership', 'Radio', 'SMM', 'Telegram posts']
 
 # Заполнение значений в столбце Campaign значением 'unknown', если Source соответствует одному из значений в списке
 Spend.loc[Spend['Source'].isin(sources_to_update), 'Campaign'] = 'unknown'
-
 
 # Значения, для которых нужно заменить пропуски
 values_to_fill = ['Facebook Ads', 'Google Ads', 'Test', 'Tiktok Ads', 'Webinar', 'Youtube Ads']

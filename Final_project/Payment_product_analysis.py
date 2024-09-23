@@ -7,93 +7,79 @@ import seaborn as sns
 import matplotlib.dates as mdates
 
 Deals1 = pd.read_excel('Deals1.xlsx')
-Calls = pd.read_excel('Calls (Done) (1).xlsx')
-Spend = pd.read_excel('Spend (Done) (2).xlsx')
+Calls = pd.read_excel('Calls.xlsx')
+Spend = pd.read_excel('Spend.xlsx')
 
-import matplotlib.pyplot as plt
-
-# 1. Distribution and Success of Payment Types
-# Group by Payment Type to calculate the total deals and successful deals
+# Подсчет успешных сделок по типам платежей
 payment_analysis = Deals1.groupby('Payment Type').agg({
     'Id': 'count',  # Total deals
     'Stage': lambda x: (x == 'Payment Done').sum()  # Successful deals
 }).reset_index()
 
-# Calculate the success rate for each payment type
+# Процент успешных сделок для каждого типа платежа
 payment_analysis.rename(columns={'Id': 'Total Deals', 'Stage': 'Successful Deals'}, inplace=True)
 payment_analysis['Success Rate'] = payment_analysis['Successful Deals'] / payment_analysis['Total Deals']
 
-# Plotting Payment Type Distribution
+# Фильтрация для исключения 'UNKNOWN' типа платежа (в верхнем регистре)
+payment_analysis = payment_analysis[payment_analysis['Payment Type'] != 'UNKNOWN']
+
+# Сортировка по убыванию по количеству сделок (Total Deals)
+payment_analysis = payment_analysis.sort_values(by='Total Deals', ascending=False)
+
+# Построение объединенного графика
 fig, ax1 = plt.subplots(figsize=(10, 6))
+
+# Столбчатая диаграмма для общего количества сделок
 ax1.bar(payment_analysis['Payment Type'], payment_analysis['Total Deals'], color='skyblue', label='Total Deals')
-ax1.set_xlabel('Payment Type')
-ax1.set_ylabel('Total Deals')
-ax1.set_title('Distribution of Payment Types')
-plt.xticks(rotation=45)
+ax1.set_xlabel('Тип платежа')
+ax1.set_ylabel('Всего сделок')
+ax1.set_title('Распределение видов платежей и показатель успешности')
+
+# Вторая ось Y для показателя успешности
+ax2 = ax1.twinx()
+ax2.plot(payment_analysis['Payment Type'], payment_analysis['Success Rate'], color='green', marker='o', label='Success Rate')
+ax2.set_ylabel('Показатель успешности')
+
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+
+plt.savefig('distribution_success_rate_payment_type.png')
 plt.show()
 
-# Plotting Payment Type Success Rate
-fig, ax2 = plt.subplots(figsize=(10, 6))
-ax2.bar(payment_analysis['Payment Type'], payment_analysis['Success Rate'], color='green', label='Success Rate')
-ax2.set_xlabel('Payment Type')
-ax2.set_ylabel('Success Rate')
-ax2.set_title('Success Rate by Payment Type')
+
+
+
+
+# # Популярность и успешность продуктов и видов образования
+
+bubble_data = Deals1[(Deals1['Stage'] == 'Payment Done') & (Deals1['Product'].notna())]
+
+bubble_grouped = bubble_data.groupby(['Product', 'Education Type']).size().reset_index(name='Count')
+
+plt.figure(figsize=(12, 7))
+
+# построение пузырьковой диаграммы
+plt.scatter(bubble_grouped['Product'], bubble_grouped['Education Type'], 
+            s=bubble_grouped['Count'] * 20,  # Scale down the bubble size
+            alpha=0.6, edgecolors="w", linewidth=2)
+
+# добавление текстовых меток для пузырьков (успешные сделки)
+for i in range(len(bubble_grouped)):
+    plt.text(bubble_grouped['Product'][i], bubble_grouped['Education Type'][i], 
+             str(bubble_grouped['Count'][i]), color='black', ha='center', va='center', fontsize=10)
+
+plt.xlim(-0.5, len(bubble_grouped['Product'].unique()) - 0.5)
+plt.ylim(-0.5, len(bubble_grouped['Education Type'].unique()) - 0.5)
+
+plt.title('Успешные сделки для продуктов и типов обучения')
+plt.xlabel('Продукт')
+plt.ylabel('Тип обучения')
 plt.xticks(rotation=45)
-plt.show()
-# 2. Popularity and Success of Products and Education Types
+plt.grid(True)
 
-# Analyze Products
-product_analysis = Deals1.groupby('Product').agg({
-    'Id': 'count',  # Total deals
-    'Stage': lambda x: (x == 'Payment Done').sum()  # Successful deals
-}).reset_index()
-
-# Calculate success rate for each product
-product_analysis.rename(columns={'Id': 'Total Deals', 'Stage': 'Successful Deals'}, inplace=True)
-product_analysis['Success Rate'] = product_analysis['Successful Deals'] / product_analysis['Total Deals']
-
-# Plotting Product Popularity
-fig, ax3 = plt.subplots(figsize=(10, 6))
-ax3.bar(product_analysis['Product'], product_analysis['Total Deals'], color='skyblue', label='Total Deals')
-ax3.set_xlabel('Product')
-ax3.set_ylabel('Total Deals')
-ax3.set_title('Popularity of Products')
-plt.xticks(rotation=45)
-plt.show()
-
-# Plotting Product Success Rate
-fig, ax4 = plt.subplots(figsize=(10, 6))
-ax4.bar(product_analysis['Product'], product_analysis['Success Rate'], color='green', label='Success Rate')
-ax4.set_xlabel('Product')
-ax4.set_ylabel('Success Rate')
-ax4.set_title('Success Rate by Product')
-plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('Successful_deals_products_types.png')
 plt.show()
 
-# Analyze Education Types
-education_analysis = Deals1.groupby('Education Type').agg({
-    'Id': 'count',  # Total deals
-    'Stage': lambda x: (x == 'Payment Done').sum()  # Successful deals
-}).reset_index()
 
-# Calculate success rate for each education type
-education_analysis.rename(columns={'Id': 'Total Deals', 'Stage': 'Successful Deals'}, inplace=True)
-education_analysis['Success Rate'] = education_analysis['Successful Deals'] / education_analysis['Total Deals']
 
-# Plotting Education Type Popularity
-fig, ax5 = plt.subplots(figsize=(10, 6))
-ax5.bar(education_analysis['Education Type'], education_analysis['Total Deals'], color='skyblue', label='Total Deals')
-ax5.set_xlabel('Education Type')
-ax5.set_ylabel('Total Deals')
-ax5.set_title('Popularity of Education Types')
-plt.xticks(rotation=45)
-plt.show()
-
-# Plotting Education Type Success Rate
-fig, ax6 = plt.subplots(figsize=(10, 6))
-ax6.bar(education_analysis['Education Type'], education_analysis['Success Rate'], color='green', label='Success Rate')
-ax6.set_xlabel('Education Type')
-ax6.set_ylabel('Success Rate')
-ax6.set_title('Success Rate by Education Type')
-plt.xticks(rotation=45)
-plt.show()
